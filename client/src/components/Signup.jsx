@@ -32,7 +32,10 @@ function Signup({ setUser }) {
             .required('Must confirm your password'),
         });
 
-    const combinedSchema = signupSchema.concat(passwordValidationSchema)
+    const combinedSchema = Yup.object().shape({
+        ...signupSchema.fields,
+        ...passwordValidationSchema.fields,
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -44,7 +47,7 @@ function Signup({ setUser }) {
             confirmPassword: ''
         },
         validationSchema: combinedSchema,
-        onSubmit: (values) => {
+        onSubmit: (values, {resetForm}) => {
             fetch('/users', {
                 method: 'POST',
                 headers: {
@@ -52,7 +55,9 @@ function Signup({ setUser }) {
                 },
                 body: JSON.stringify(values)
             }).then((r) => {
+                console.log(values)
                 if (r.ok) {
+                    resetForm({values: ''})
                     r.json().then(({user}) => {
                         setUser(user)
                         //navigate into site
@@ -80,6 +85,7 @@ function Signup({ setUser }) {
                     <div className="error">{formik.errors.username}</div>
                     )}
                 </Form.Group>
+                
                 <Form.Group className="mb-3" controlId="formFirstName">
                     <Form.Label>First Name</Form.Label>
                     <Form.Control 
@@ -93,6 +99,7 @@ function Signup({ setUser }) {
                     <div className="error">{formik.errors.firstName}</div>
                     )}
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formLastName">
                     <Form.Label>Last Name</Form.Label>
                     <Form.Control 
@@ -106,6 +113,7 @@ function Signup({ setUser }) {
                     <div className="error">{formik.errors.lastName}</div>
                     )}
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control 
@@ -120,6 +128,7 @@ function Signup({ setUser }) {
                     <div className="error">{formik.errors.email}</div>
                     )}
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control 
