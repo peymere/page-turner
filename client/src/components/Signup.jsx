@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
-function Signup() {
+function Signup({ setUser }) {
 
     const signupSchema = Yup.object({
             email: Yup.string().email('Invalid Email Address').required('Email Required'),
@@ -44,9 +44,24 @@ function Signup() {
             confirmPassword: ''
         },
         validationSchema: combinedSchema,
-        
         onSubmit: (values) => {
-            console.log(values)}
+            fetch('/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values)
+            }).then((r) => {
+                if (r.ok) {
+                    r.json().then(({user}) => {
+                        setUser(user)
+                        //navigate into site
+                    })
+                } else {
+                    console.log('Error fetching user')
+                }
+            })
+        }
     })
 
     return (

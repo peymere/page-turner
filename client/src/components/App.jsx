@@ -6,9 +6,10 @@ import '../stylesheets/App.css';
 import Signup from './Signup';
 
 function App() {
-  return (
-    <Signup />
-  );
+  const [user, setUser] = useState(null)
+
+  return <Signup setUser={setUser} />
+
 }
 
 export default App;
