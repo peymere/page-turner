@@ -1,9 +1,11 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useFormik } from 'formik';
-import * as Yup from 'yup'
+import * as Yup from 'yup';
+import { useOutletContext,  } from 'react-router-dom'
 
-function Signup({ setUser }) {
+function Signup() {
+    const setUser = useOutletContext()
 
     const signupSchema = Yup.object({
             email: Yup.string().email('Invalid Email Address').required('Email Required'),
@@ -85,7 +87,7 @@ function Signup({ setUser }) {
                     <div className="error">{formik.errors.username}</div>
                     )}
                 </Form.Group>
-                
+
                 <Form.Group className="mb-3" controlId="formFirstName">
                     <Form.Label>First Name</Form.Label>
                     <Form.Control 

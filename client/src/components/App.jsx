@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import '../stylesheets/App.css';
+import { Outlet } from 'react-router-dom';
 
-
-
-import Signup from './Signup';
 
 function App() {
   const [user, setUser] = useState(null)
 
-  return <Signup setUser={setUser} />
+  
+  return (
+    <div className="App">
+      <Outlet context={setUser}/>
+    </div>
+  );
 
 }
 
