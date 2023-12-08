@@ -15,9 +15,14 @@ class Users(Resource):
         )
     def post(self):
         data = request.get_json()
-        user = User(email=data['email'], username=data['username'], first_name=data['firstName'], last_name=data['lastName'],password_hash=data['password'],
-        created_at=datetime.utcnow(),  
-        updated_at=datetime.utcnow()
+        user = User(
+            email=data['email'], 
+            username=data['username'], 
+            first_name=data['firstName'], 
+            last_name=data['lastName'],
+            password_hash=data['password'],
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
         )
         db.session.add(user)
         db.session.commit()
