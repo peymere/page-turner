@@ -11,6 +11,7 @@ flask-restful = "*"
 sqlalchemy-serializer = "*"
 faker = "*"
 flask-bcrypt = "*"
+ipdb = "*"
 
 [dev-packages]
 

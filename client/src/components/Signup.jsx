@@ -73,6 +73,7 @@ function Signup() {
 
     return (
         <div>
+            <h1>Sign Up</h1>
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group className="mb-3" controlId="formUsername">
                     <Form.Label>Username</Form.Label>
