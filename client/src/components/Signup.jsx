@@ -32,7 +32,7 @@ function Signup() {
             .max(20, 'Password must not exceed 20 characters')
             .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]/,
-            'Password must contain at least one uppercase letter, one lowercase letter, and one number')
+            'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number')
             .required('Password is required'),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
@@ -78,164 +78,225 @@ function Signup() {
 
     return (
         <div className={styles.signup_container}>
-            <body>
-        <main className='form-signin bg-opacity-25'>
-            <h1>Create an Account</h1>
-            <h2>Find Your Next Escape</h2>
-            <Form onSubmit={formik.handleSubmit}>
-            <Container>
-                <Row className='form-container'>
-                <Col md={6}>
-                    <Form.Group className="form-group" controlId="formFirstName">
-                    <Form.Control
-                        type="text"
-                        placeholder="First name"
-                        name='firstName'
-                        className='form-control'
-                        value={formik.values.firstName}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.firstName && formik.errors.firstName && (
-                        <div 
-                        className="error"
-                        style={{
-                            color: '#F0DAAE',
-                            fontFamily: 'Questrial, sans-serif',
-                            fontSize: '16px'
-                        }}>{formik.errors.firstName}</div>
-                    )}
-                    </Form.Group>
+        <body>
+            <main className={`${styles.formSignin} ${styles.bgGradient}`}>
+                <h1>Create an Account</h1>
+                <h2>Find Your Next Escape</h2>
+                <Form onSubmit={formik.handleSubmit}>
+                <Container className=''>
+                    <Row className='mb-7'>
+                    <Col md={6}>
+                        <Form.Group 
+                        className={styles.formGroup} 
+                        controlId="formFirstName"
+                        >
+                            <Form.Control
+                                type="text"
+                                placeholder="First name"
+                                name='firstName'
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
+                                id='form-first-name'
+                                value={formik.values.firstName}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                tabIndex={1}
+                                style={{
+                                marginRight: '100px',
+                                marginLeft: '-40px'
+                            }}
+                            />
+                            {formik.touched.firstName && formik.errors.firstName && (
+                                <div 
+                                className="error"
+                                style={{
+                                    color: '#F0DAAE',
+                                    fontFamily: 'Questrial, sans-serif',
+                                    fontSize: '15px',
+                                    marginLeft: '-30px',
+                                    marginTop: '-12px',
+                                }}>{formik.errors.firstName}</div>
+                            )}
+                        </Form.Group>
 
-                    <Form.Group className="form-group" controlId="formUsername">
-                    <Form.Control
-                        type="text"
-                        placeholder="Username"
-                        name='username'
-                        value={formik.values.username}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.username && formik.errors.username && (
-                        <div className="error"
-                        style={{
-                            color: '#F0DAAE',
-                            fontFamily: 'Questrial, sans-serif',
-                            fontSize: '16px'
-                        }}
-                        >{formik.errors.username}</div>
-                    )}
-                    </Form.Group>
-                    
-                    <Form.Group className="form-group" controlId="formPassword">
-                    <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        name='password'
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.password && formik.errors.password && (
-                        <div className="error"
-                        style={{
-                            color: '#F0DAAE',
-                            fontFamily: 'Questrial, sans-serif',
-                            fontSize: '16px'
-                        }}
-                        >{formik.errors.password}</div>
-                    )}
-                    </Form.Group>
+                        <Form.Group 
+                        className={styles.formGroup} 
+                        controlId="formUsername">
+                        <Form.Control
+                            type="text"
+                            placeholder="Username"
+                            name='username'
+                            value={formik.values.username}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className={`form-control input-placeholder-custom ${styles.formControl}`}
+                            tabIndex={3}
+                            style={{
+                                marginRight: '100px',
+                                marginLeft: '-40px'
+                            }}
+                        />
+                        {formik.touched.username && formik.errors.username && (
+                            <div className="error"
+                            style={{
+                                color: '#F0DAAE',
+                                fontFamily: 'Questrial, sans-serif',
+                                fontSize: '16px',
+                                marginLeft: '-30px',
+                                marginTop: '-12px',
+                            }}
+                            >{formik.errors.username}</div>
+                        )}
+                        </Form.Group>
+                        
+                        <Form.Group 
+                        className={styles.formGroup} 
+                        controlId="formPassword">
+                        <Form.Control
+                            type="password"
+                            placeholder="Password"
+                            name='password'
+                            className={`form-control input-placeholder-custom ${styles.formControl}`}
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            tabIndex={5}
+                            style={{
+                                marginRight: '100px',
+                                marginLeft: '-40px'
+                            }}
+                        />
+                        {formik.touched.password && formik.errors.password && (
+                            <div className="error"
+                            style={{
+                                color: '#F0DAAE',
+                                fontFamily: 'Questrial, sans-serif',
+                                fontSize: '15px',
+                                marginLeft: '-30px',
+                                marginTop: '-12px',
+                                width: '140%'
+                            }}
+                            >{formik.errors.password}</div>
+                        )}
+                        </Form.Group>
 
-                </Col>
+                    </Col>
 
-                <Col md={6}>
-                    <Form.Group className="form-group" controlId="formLastName">
-                    <Form.Control
-                        type="text"
-                        placeholder="Last Name"
-                        name='lastName'
-                        value={formik.values.lastName}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.lastName && formik.errors.lastName && (
-                        <div className="error"
-                        style={{
-                            color: '#F0DAAE',
-                            fontFamily: 'Questrial, sans-serif',
-                            fontSize: '16px'
-                        }}
-                        >{formik.errors.lastName}</div>
-                    )}
-                    </Form.Group>
+                    <Col md={6}>
+                        <Form.Group 
+                        className={styles.formGroup} 
+                        controlId="formLastName">
+                            <Form.Control
+                                type="text"
+                                placeholder="Last Name"
+                                name='lastName'
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
+                                value={formik.values.lastName}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                tabIndex={2}
+                                style={{marginLeft: '10px'}}
+                            />
+                            {formik.touched.lastName && formik.errors.lastName && (
+                                <div className="error"
+                                style={{
+                                    color: '#F0DAAE',
+                                    fontFamily: 'Questrial, sans-serif',
+                                    fontSize: '16px',
+                                    marginLeft: '17px',
+                                    marginTop: '-12px',
+                                }}
+                                >{formik.errors.lastName}</div>
+                            )}
+                        </Form.Group>
 
-                    <Form.Group className="form-group" controlId="formBasicEmail">
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        name='email'
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.email && formik.errors.email && (
-                        <div className="error"
-                        style={{
-                            color: '#F0DAAE',
-                            fontFamily: 'Questrial, sans-serif',
-                            fontSize: '16px'
-                        }}
-                        >{formik.errors.email}</div>
-                    )}
-                    </Form.Group>
+                        <Form.Group 
+                        className={styles.formGroup} 
+                        controlId="formBasicEmail">
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                name='email'
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                tabIndex={4}
+                                style={{marginLeft: '10px'}}
+                            />
+                            {formik.touched.email && formik.errors.email && (
+                                <div className="error"
+                                style={{
+                                    color: '#F0DAAE',
+                                    fontFamily: 'Questrial, sans-serif',
+                                    fontSize: '16px',
+                                    marginLeft: '17px',
+                                    marginTop: '-12px',
+                                }}
+                                >{formik.errors.email}</div>
+                            )}
+                        </Form.Group>
 
-                    <Form.Group className="form-group" controlId="formConfirmPassword">
-                    <Form.Control
-                        type="password"
-                        placeholder="Confirm Password"
-                        name='confirmPassword'
-                        value={formik.values.confirmPassword}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                        <div className="error"
-                        style={{
-                            color: '#F0DAAE',
-                            fontFamily: 'Questrial, sans-serif',
-                            fontSize: '16px'
-                        }}
-                        >{formik.errors.confirmPassword}</div>
-                    )}
-                    </Form.Group>
-                </Col>
-                </Row>
-            </Container>
+                        <Form.Group 
+                        className={styles.formGroup} 
+                        controlId="formConfirmPassword">
+                            <Form.Control
+                                type="password"
+                                placeholder="Confirm Password"
+                                name='confirmPassword'
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
+                                value={formik.values.confirmPassword}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                tabIndex={6}
+                                style={{
+                                    marginLeft: '10px'
+                                }}
+                            />
+                            {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                                <div className="error"
+                                style={{
+                                    color: '#F0DAAE',
+                                    fontFamily: 'Questrial, sans-serif',
+                                    fontSize: '15px',
+                                    marginLeft: '17px',
+                                    marginTop: '-12px',
+                                    marginBottom: '20px',
+                                    width: '140%'
+                                }}
+                                >{formik.errors.confirmPassword}</div>
+                            )}
+                        </Form.Group>
+                    </Col>
+                    </Row>
+                </Container>
 
-            <Button 
-            variant="primary" 
-            type="submit" 
-            disabled={!formik.isValid}
-            style={{
-            fontFamily: 'Questrial, sans-serif',
-            fontVariant: 'normal',
-            fontSize: '20px',
-            textAlign: 'center',
-            fontWeight: 700,
-            backgroundColor: '#584446',
-            color: '#D8C3A5',
-            }} >
-                Submit
-            </Button>
-            </Form>
-            <p>
-            Already have an account?{' '}
-            <NavLink to='/login' style={{ color: '#929984' }}>
-                Login
-            </NavLink>
-            </p>
-        </main>
+                <Button 
+                variant="primary" 
+                type="submit" 
+                disabled={!formik.isValid}
+                style={{
+                fontFamily: 'Questrial, sans-serif',
+                fontVariant: 'normal',
+                fontSize: '20px',
+                textAlign: 'center',
+                fontWeight: 700,
+                backgroundColor: '#584446',
+                color: '#D8C3A5',
+                marginTop: '.5rem',
+                marginBottom: '15px',
+                width: '200px'
+                }} >
+                    Submit
+                </Button>
+                </Form>
+                <p>
+                Already have an account?{' '}
+                <NavLink to='/login' style={{ color: '#929984' }}>
+                    Login
+                </NavLink>
+                </p>
+            </main>
+            
         </body>
     </div>
 
