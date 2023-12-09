@@ -28,7 +28,6 @@ function App() {
       <header>
         <NavBar setUser={setUser} />
       </header>
-      <h1>This is a test</h1>
       <Outlet context={setUser}/>
     </div>
   );

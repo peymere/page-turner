@@ -1,8 +1,13 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useOutletContext,  } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+
+// local imports
+import styles from '../stylesheets/Signup.module.css'
 
 function Signup() {
     const setUser = useOutletContext()
@@ -72,102 +77,275 @@ function Signup() {
     })
 
     return (
-        <div>
-            <h1>Sign Up</h1>
+        <div className={styles.signup_container}>
+            <body>
+        <main className='form-signin bg-opacity-25'>
+            <h1>Create an Account</h1>
+            <h2>Find Your Next Escape</h2>
             <Form onSubmit={formik.handleSubmit}>
-                <Form.Group className="mb-3" controlId="formUsername">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control 
-                    type="text" 
-                    placeholder="Username" 
-                    name='username'
-                    value={formik.values.username} 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
-                    {formik.touched.username && formik.errors.username && (
-                    <div className="error">{formik.errors.username}</div>
-                    )}
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formFirstName">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control 
-                    type="text" 
-                    placeholder="First name" 
-                    name='firstName'
-                    value={formik.values.firstName} 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
+            <Container>
+                <Row className='form-container'>
+                <Col md={6}>
+                    <Form.Group className="form-group" controlId="formFirstName">
+                    <Form.Control
+                        type="text"
+                        placeholder="First name"
+                        name='firstName'
+                        className='form-control'
+                        value={formik.values.firstName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
                     {formik.touched.firstName && formik.errors.firstName && (
-                    <div className="error">{formik.errors.firstName}</div>
+                        <div 
+                        className="error"
+                        style={{
+                            color: '#F0DAAE',
+                            fontFamily: 'Questrial, sans-serif',
+                            fontSize: '16px'
+                        }}>{formik.errors.firstName}</div>
                     )}
-                </Form.Group>
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formLastName">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control 
-                    type="text" 
-                    placeholder="Last Name" 
-                    name='lastName'
-                    value={formik.values.lastName} 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
+                    <Form.Group className="form-group" controlId="formUsername">
+                    <Form.Control
+                        type="text"
+                        placeholder="Username"
+                        name='username'
+                        value={formik.values.username}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.username && formik.errors.username && (
+                        <div className="error"
+                        style={{
+                            color: '#F0DAAE',
+                            fontFamily: 'Questrial, sans-serif',
+                            fontSize: '16px'
+                        }}
+                        >{formik.errors.username}</div>
+                    )}
+                    </Form.Group>
+                    
+                    <Form.Group className="form-group" controlId="formPassword">
+                    <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        name='password'
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                        <div className="error"
+                        style={{
+                            color: '#F0DAAE',
+                            fontFamily: 'Questrial, sans-serif',
+                            fontSize: '16px'
+                        }}
+                        >{formik.errors.password}</div>
+                    )}
+                    </Form.Group>
+
+                </Col>
+
+                <Col md={6}>
+                    <Form.Group className="form-group" controlId="formLastName">
+                    <Form.Control
+                        type="text"
+                        placeholder="Last Name"
+                        name='lastName'
+                        value={formik.values.lastName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
                     {formik.touched.lastName && formik.errors.lastName && (
-                    <div className="error">{formik.errors.lastName}</div>
+                        <div className="error"
+                        style={{
+                            color: '#F0DAAE',
+                            fontFamily: 'Questrial, sans-serif',
+                            fontSize: '16px'
+                        }}
+                        >{formik.errors.lastName}</div>
                     )}
-                </Form.Group>
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control 
-                    type="email" 
-                    placeholder="Enter email" 
-                    name='email'
-                    value={formik.values.email} 
-                    onChange={formik.handleChange} 
-                    onBlur={formik.handleBlur}
+                    <Form.Group className="form-group" controlId="formBasicEmail">
+                    <Form.Control
+                        type="email"
+                        placeholder="Enter email"
+                        name='email'
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
                     {formik.touched.email && formik.errors.email && (
-                    <div className="error">{formik.errors.email}</div>
+                        <div className="error"
+                        style={{
+                            color: '#F0DAAE',
+                            fontFamily: 'Questrial, sans-serif',
+                            fontSize: '16px'
+                        }}
+                        >{formik.errors.email}</div>
                     )}
-                </Form.Group>
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                    type="password" 
-                    placeholder="Password" 
-                    name='password'
-                    value={formik.values.password} 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
-                    {formik.touched.password && formik.errors.password && (
-                    <div className="error">{formik.errors.password}</div>
-                    )}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formConfirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control 
-                    type="password" 
-                    placeholder="Confirm Password" 
-                    name='confirmPassword' 
-                    value={formik.values.confirmPassword}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
+                    <Form.Group className="form-group" controlId="formConfirmPassword">
+                    <Form.Control
+                        type="password"
+                        placeholder="Confirm Password"
+                        name='confirmPassword'
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
                     {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                    <div className="error">{formik.errors.confirmPassword}</div>
+                        <div className="error"
+                        style={{
+                            color: '#F0DAAE',
+                            fontFamily: 'Questrial, sans-serif',
+                            fontSize: '16px'
+                        }}
+                        >{formik.errors.confirmPassword}</div>
                     )}
-                </Form.Group>
+                    </Form.Group>
+                </Col>
+                </Row>
+            </Container>
 
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" type="submit" disabled={!formik.isValid}>
-                    Submit
-                </Button>
+            <Button 
+            variant="primary" 
+            type="submit" 
+            disabled={!formik.isValid}
+            style={{
+            fontFamily: 'Questrial, sans-serif',
+            fontVariant: 'normal',
+            fontSize: '20px',
+            textAlign: 'center',
+            fontWeight: 700,
+            backgroundColor: '#584446',
+            color: '#D8C3A5',
+            }} >
+                Submit
+            </Button>
             </Form>
-        </div>
+            <p>
+            Already have an account?{' '}
+            <NavLink to='/login' style={{ color: '#929984' }}>
+                Login
+            </NavLink>
+            </p>
+        </main>
+        </body>
+    </div>
+
+            
+
+
+
+
+
     );
 }
 
 export default Signup;
+
+
+
+//         // <div className={styles.signup_container}>
+        //     <main className='form-signin bg-opacity-25'>
+        //         <h1>Create an Account</h1>
+        //         <h2>Find Your Next Escape</h2>
+        //         <Form onSubmit={formik.handleSubmit}>
+        //             <div className='form-container'>
+        //                 <Form.Group className="form-group" controlId="formFirstName">
+        //                     <Form.Control 
+        //                     type="text" 
+        //                     placeholder="First name" 
+        //                     name='firstName'
+        //                     value={formik.values.firstName} 
+        //                     onChange={formik.handleChange}
+        //                     onBlur={formik.handleBlur}/>
+        //                     {formik.touched.firstName && formik.errors.firstName && (
+        //                     <div className="error">{formik.errors.firstName}</div>
+        //                     )}
+        //                 </Form.Group>
+
+        //                 <Form.Group className="form-group" controlId="formLastName">
+                            
+        //                     <Form.Control 
+        //                     type="text" 
+        //                     placeholder="Last Name" 
+        //                     name='lastName'
+        //                     value={formik.values.lastName} 
+        //                     onChange={formik.handleChange}
+        //                     onBlur={formik.handleBlur}/>
+        //                     {formik.touched.lastName && formik.errors.lastName && (
+        //                     <div className="error">{formik.errors.lastName}</div>
+        //                     )}
+        //                 </Form.Group>
+
+        //                 <Form.Group className="form-group" controlId="formUsername">
+                            
+        //                     <Form.Control 
+        //                     type="text" 
+        //                     placeholder="Username" 
+        //                     name='username'
+        //                     value={formik.values.username} 
+        //                     onChange={formik.handleChange}
+        //                     onBlur={formik.handleBlur}/>
+        //                     {formik.touched.username && formik.errors.username && (
+        //                     <div className="error">{formik.errors.username}</div>
+        //                     )}
+        //                 </Form.Group>
+
+        //                 <Form.Group className="form-group" controlId="formBasicEmail">
+                            
+        //                     <Form.Control 
+        //                     type="email" 
+        //                     placeholder="Enter email" 
+        //                     name='email'
+        //                     value={formik.values.email} 
+        //                     onChange={formik.handleChange} 
+        //                     onBlur={formik.handleBlur}
+        //                     />
+        //                     {formik.touched.email && formik.errors.email && (
+        //                     <div className="error">{formik.errors.email}</div>
+        //                     )}
+        //                 </Form.Group>
+
+        //                 <Form.Group className="form-group" controlId="formPassword">
+                            
+        //                     <Form.Control 
+        //                     type="password" 
+        //                     placeholder="Password" 
+        //                     name='password'
+        //                     value={formik.values.password} 
+        //                     onChange={formik.handleChange}
+        //                     onBlur={formik.handleBlur}/>
+        //                     {formik.touched.password && formik.errors.password && (
+        //                     <div className="error">{formik.errors.password}</div>
+        //                     )}
+        //                 </Form.Group>
+        //                 <Form.Group className="form-group" controlId="formConfirmPassword">
+                            
+        //                     <Form.Control 
+        //                     type="password" 
+        //                     placeholder="Confirm Password" 
+        //                     name='confirmPassword' 
+        //                     value={formik.values.confirmPassword}
+        //                     onChange={formik.handleChange}
+        //                     onBlur={formik.handleBlur}/>
+        //                     {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+        //                     <div className="error">{formik.errors.confirmPassword}</div>
+        //                     )}
+        //                 </Form.Group>
+        //             </div>
+
+        //             <Button variant="primary" type="submit" disabled={!formik.isValid}>
+        //                 Submit
+        //             </Button>
+        //         </Form>
+        //         <p>Already have an account? <NavLink to='/login' style={{ color: '#929984' }}>Login</NavLink></p>
+        //     </main>
+        // </div>
