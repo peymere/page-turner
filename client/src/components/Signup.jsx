@@ -1,16 +1,25 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useOutletContext,  } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
+import { EyeSlash } from 'react-bootstrap-icons';
+import { Eye } from 'react-bootstrap-icons';
 
 // local imports
 import styles from '../stylesheets/Signup.module.css'
 
 function Signup() {
     const setUser = useOutletContext()
+    const [type, setType] = useState('password');
+    const [icon, setIcon] = useState(<Eye/>);
+
+    const handlePwViewToggle = () => {
+        setType((prevType) => (prevType === 'password' ? 'text' : 'password'));
+    };
 
     const signupSchema = Yup.object({
             email: Yup.string().email('Invalid Email Address').required('Email Required'),
@@ -95,7 +104,6 @@ function Signup() {
                                 placeholder="First name"
                                 name='firstName'
                                 className={`form-control input-placeholder-custom ${styles.formControl}`}
-                                id='form-first-name'
                                 value={formik.values.firstName}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -151,20 +159,27 @@ function Signup() {
                         <Form.Group 
                         className={styles.formGroup} 
                         controlId="formPassword">
-                        <Form.Control
-                            type="password"
-                            placeholder="Password"
-                            name='password'
-                            className={`form-control input-placeholder-custom ${styles.formControl}`}
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            tabIndex={5}
-                            style={{
-                                marginRight: '100px',
-                                marginLeft: '-40px'
-                            }}
-                        />
+                        
+                            <div className={styles.relativePosition}>
+                                <Form.Control
+                                    type={type}
+                                    placeholder="Password"
+                                    name='password'
+                                    dataToggle="password"
+                                    className={`form-control input-placeholder-custom ${styles.formControl} ${styles.pwFormControl}`}
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    style={{
+                                        marginRight: '100px',
+                                    }}
+                                    tabIndex={5}
+                                />
+                                <span className={styles.eyeIcon} style={{ color: '#F0DAAE' }} onClick={handlePwViewToggle}>
+                                    {type === 'password' ? <Eye /> : <EyeSlash />}
+                                </span>
+                            </div>
+                        
                         {formik.touched.password && formik.errors.password && (
                             <div className="error"
                             style={{

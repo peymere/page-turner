@@ -47,12 +47,28 @@
         color: #F0DAAE;
     }
 
+    .pwFormControl {
+        margin-left: -40px;
+    }
+
+    .relativePosition {
+        position: relative;
+    }
+
+    .eyeIcon {
+        position: absolute;
+        top: 47%;
+        right:-20px; 
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
     .bgGradient {
         background: linear-gradient(13deg, rgba(0, 0, 0, .5) 56%, rgba(177,
             113, 6, .15) 100%);
         backdrop-filter: blur(1.8px);
         -webkit-box-shadow: -9px 7px 24px 4px rgba(0, 0, 0, 0.76), 5px -4px 26px 4px rgba(163, 103, 1, 0.76);
-            box-shadow: -9px 7px 24px 4px rgba(0, 0, 0, 0.76), 9px -8px 26px 4px rgba(177, 113, 6, 0.15);
+        box-shadow: -9px 7px 24px 4px rgba(0, 0, 0, 0.76), 9px -8px 26px 4px rgba(177, 113, 6, 0.15);
     }
 
     h1 {
