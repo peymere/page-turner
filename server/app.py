@@ -32,6 +32,16 @@ class Users(Resource):
 
 api.add_resource(Users, '/api/v1/users')
 
+class UserById(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            return make_response({'error': 'User not found'}, 404)
+        else:
+            return make_response(user.to_dict(), 200)
+
+api.add_resource(UserById, '/api/v1/users/<int:id>')
+
 @app.route('/api/v1/authorized')
 def authorized():
     # import ipdb; ipdb.set_trace()
