@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Override Bootstrap placeholder color */
+:root {
+  --placeholder-color: #F0DAAE;
+  --placeholder-opacity: 1;
+}
+
+/* Override Bootstrap placeholder color */
+.input-placeholder-custom::placeholder {
+  color: var(--placeholder-color) !important;
+  opacity: var(--placeholder-opacity) !important;
+}

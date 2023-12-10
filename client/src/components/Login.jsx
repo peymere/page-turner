@@ -3,10 +3,11 @@ import Form from 'react-bootstrap/Form';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useOutletContext,  } from 'react-router-dom'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { OutletContext } from './App'
 
 function Login() {
-    const setUser = useOutletContext()
+    const { setUser } = useContext(OutletContext)
     
 
     const loginSchema = Yup.object({

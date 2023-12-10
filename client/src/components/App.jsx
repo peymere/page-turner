@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import '../stylesheets/App.css';
 import { Outlet } from 'react-router-dom';
 import NavBar from './NavBar';
 
+export const OutletContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null)
@@ -13,6 +14,7 @@ function App() {
     .then((resp) => {
       if (resp.ok) {
         resp.json().then((user) => setUser(user))
+        console.log(user)
       } else {
         // handle what should happen if not logged in
         console.log('error')
@@ -20,16 +22,17 @@ function App() {
     })
   }, [])
 
-  
+  const context = {user, setUser}
 
   
   return (
     <div className="App">
       <header>
-        <NavBar setUser={setUser} />
+        <NavBar user={user} setUser={setUser} />
       </header>
-      <h1>This is a test</h1>
-      <Outlet context={setUser}/>
+      <OutletContext.Provider value={{user, setUser}}>
+      <Outlet context={context}/>
+      </OutletContext.Provider>
     </div>
   );
 
