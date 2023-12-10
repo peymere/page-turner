@@ -3,7 +3,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { NavLink } from 'react-router-dom';
 
 
-function NavBar({setUser}) {
+function NavBar({user, setUser}) {
     
 
     function handleLogout() {
@@ -20,11 +20,15 @@ function NavBar({setUser}) {
 
     return (
         <div>
-            <h1>NavBar</h1>
+            <Button><NavLink to='/home' className="nav-link">Home</NavLink></Button>
             <ButtonGroup aria-label="Basic example">
-                <Button variant="secondary"><NavLink to='/login' className="nav-link">Login</NavLink></Button>
-                <Button variant="secondary" onClick={handleLogout}>Logout</Button>
-                <Button variant="secondary"><NavLink to='/signup' className="nav-link">Sign Up</NavLink></Button>
+                {!user ? <Button variant="secondary"><NavLink to='/login' className="nav-link">Login</NavLink></Button> : 
+                <Button variant="secondary"><NavLink to={`/userprofile/${user.id}`} className="nav-link">Profile</NavLink></Button>}
+                {!user ? <Button variant="secondary"><NavLink to='/signup' className="nav-link">Sign Up</NavLink></Button> : <Button variant="secondary" onClick={handleLogout}>Logout</Button>
+                }
+                
+                
+                
             </ButtonGroup>
 
         </div>
