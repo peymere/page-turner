@@ -3,11 +3,17 @@ import Form from 'react-bootstrap/Form';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useState, useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { EyeSlash } from 'react-bootstrap-icons';
+import { Eye } from 'react-bootstrap-icons';
+
+// local imports
+import styles from '../stylesheets/Login.module.css'
 import { OutletContext } from './App'
-import { NavLink } from 'react-router-dom';
 
 function Login() {
     const { setUser } = useContext(OutletContext)
+    const navigate = useNavigate()
     
 
     const loginSchema = Yup.object({
@@ -69,6 +75,7 @@ function Login() {
                         setUser(user)
                         console.log(user)
                         // navigate into site
+                        navigate('/home')
                     })
                 } else { 
                     
@@ -80,47 +87,72 @@ function Login() {
 
 
     return (
-        <div>
+        <div className={styles.login_container}>
+        <div className={styles.components_container}>
+            <div 
+            className={styles.img_container}
+            >
+                <img className={styles.book_img} src="/src_images/login-books-in-hand.jpg" alt="stack of books in a hand"
+                style={{
+
+                }}
+                />
+            </div>
+            <div className={styles.form_signin}>
+            <div className={styles.form_header}>
             <h1>Login</h1>
             <h2>Welcome Back!</h2>
-            <Form onSubmit={formik.handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicUsername" >
-                    <Form.Label>Username</Form.Label>
+            </div>
+            
+            <Form onSubmit={formik.handleSubmit} className={styles.form_input_container}>
+                <Form.Group className="" controlId="formBasicUsername" >
                     <Form.Control 
                     type="text" 
                     placeholder="Username" 
                     name='username' 
                     value={formik.values.username} 
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
+                    onBlur={formik.handleBlur}
+                    className={`form_control input-placeholder-custom ${styles.form_control}`}
+                    />
                     {formik.touched.username && formik.errors.username && (
                     <div className="error">{formik.errors.username}</div>
                     )}
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                <Form.Group className="" controlId="formBasicPassword">
                     <Form.Control 
                     type="password" 
                     placeholder="Password" 
                     name='password' 
                     value={formik.values.password} 
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
+                    onBlur={formik.handleBlur}
+                    className={`form_control input-placeholder-custom ${styles.form_control}`}
+                    />
                     {formik.touched.password && formik.errors.password && (
                     <div className="error">{formik.errors.password}</div>
                     )}
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <div className={styles.button_container}>
+                <Button 
+                variant="primary"
+                disabled={!formik.isValid}
+                className={styles.custom_btn} 
+                type="submit">
                     Login
                 </Button>
+                </div>
             </Form>
+            
             <p>
                 Need an account?{' '}
-                <NavLink to='/login' style={{ color: '#929984' }}>
+                <NavLink to='/signup' style={{ color: '#929984' }}>
                     Sign Up!
                 </NavLink>
             </p>
+            </div>
+        </div>
         </div>
     )
 }
