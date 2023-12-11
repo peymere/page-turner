@@ -2,9 +2,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useOutletContext,  } from 'react-router-dom'
 import { useState, useContext } from 'react';
 import { OutletContext } from './App'
+import { NavLink } from 'react-router-dom';
 
 function Login() {
     const { setUser } = useContext(OutletContext)
@@ -82,6 +82,7 @@ function Login() {
     return (
         <div>
             <h1>Login</h1>
+            <h2>Welcome Back!</h2>
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicUsername" >
                     <Form.Label>Username</Form.Label>
@@ -114,8 +115,15 @@ function Login() {
                     Login
                 </Button>
             </Form>
+            <p>
+                Need an account?{' '}
+                <NavLink to='/login' style={{ color: '#929984' }}>
+                    Sign Up!
+                </NavLink>
+            </p>
         </div>
     )
 }
+
 
 export default Login
