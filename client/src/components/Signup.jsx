@@ -1,21 +1,23 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Col } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useOutletContext,  } from 'react-router-dom'
+import { useOutletContext, useNavigate } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
 import { EyeSlash } from 'react-bootstrap-icons';
 import { Eye } from 'react-bootstrap-icons';
 
 // local imports
 import styles from '../stylesheets/Signup.module.css'
+import { OutletContext } from './App'
 
 function Signup() {
-    const setUser = useOutletContext()
+    const { setUser } = useContext(OutletContext)
     const [type, setType] = useState('password');
     const [icon, setIcon] = useState(<Eye/>);
+    const navigate = useNavigate()
 
     const handlePwViewToggle = () => {
         setType((prevType) => (prevType === 'password' ? 'text' : 'password'));
@@ -77,6 +79,7 @@ function Signup() {
                     r.json().then(({user}) => {
                         setUser(user)
                         //navigate into site
+                        navigate('/home')
                     })
                 } else {
                     console.log('Error fetching user')
