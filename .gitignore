@@ -30,7 +30,7 @@ lib-cov
 build/Release
 
 # dependencies
-/node_modules
+node_modules
 client/node_modules/.cache/default-development/23.pack
 /.pnp
 .pnp.js
