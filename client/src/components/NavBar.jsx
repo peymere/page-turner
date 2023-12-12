@@ -26,7 +26,9 @@ function NavBar({user, setUser}) {
 
     return (
         <div className='custom_navbar'>
-            <Navbar expand="lg" className='position-fixed w-100'>
+            <Navbar expand="lg" className='position-fixed w-100' style={
+                {"backgroundColor": "#F3EDD2"}
+            }>
                 <Container>
                     <Navbar.Brand href="#home" className="pt_logo">
                         <img
