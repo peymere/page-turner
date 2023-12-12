@@ -30,7 +30,7 @@ function NavBar({user, setUser}) {
                 {"backgroundColor": "#F3EDD2"}
             }>
                 <Container>
-                    <Navbar.Brand href="#home" className="pt_logo">
+                    <Navbar.Brand href="/" className="pt_logo">
                         <img
                         alt="PageTurner Logo"
                         src="/reading-book-logo.png"

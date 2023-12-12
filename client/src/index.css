@@ -26,7 +26,7 @@ code {
 
 /* Override Bootstrap NavBar */
 .custom_navbar {
-  background: #F3EDD2;;
+  background: #F3EDD2;
   
   .pt_logo {
       color: #584446;
@@ -41,6 +41,9 @@ code {
     font-size: 17px;
     font-weight: 400;
     padding-top: 10px;
+  }
+  .navbar_text:hover {
+    font-style: italic;
   }
 
   .nav_divider {

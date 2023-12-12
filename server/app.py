@@ -56,6 +56,13 @@ class UserById(Resource):
 
         return make_response(user.to_dict(), 200)
         
+    def delete(self, id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            return make_response({'error': 'User not found'}, 404)
+        db.session.delete(user)
+        db.session.commit()
+        return make_response({'message': 'User deleted'}, 200)
 
 api.add_resource(UserById, '/api/v1/users/<int:id>')
 
