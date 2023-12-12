@@ -23,3 +23,108 @@ code {
   color: var(--placeholder-color) !important;
   opacity: var(--placeholder-opacity) !important;
 }
+
+/* Override Bootstrap NavBar */
+.custom_navbar {
+  background: #F3EDD2;
+  
+  .pt_logo {
+      color: #584446;
+      font-family: 'Unbounded', sans-serif;
+      margin-left: 5px;
+      font-size: 21px;
+    } 
+
+  .navbar_text {
+    color: #584446;
+    font-family: 'Questrial', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    padding-top: 10px;
+  }
+
+  .nav_divider {
+    color: #584446;
+    font-size: 20px;
+    padding-top: 5px;
+  }
+
+  @media (max-width: 991.98px) {
+    .navbar_text {
+      font-size: 15px;
+      width: 100px;
+      padding: 0;
+      margin: 0;
+      margin-right: 2px;
+      text-align: center;
+      font-weight: 400;
+      color: #2a2330;
+    }
+    .nav_divider {
+      visibility: hidden;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+      font-size: 6px;
+    }
+    .navbar_nav {
+      margin-top: 20px;
+      margin-left: 85%;
+      padding-top: 10px;
+      height: auto;
+      width: fit-content;
+      background-color: #868365;
+      margin-right: .1rem !important;
+      z-index: 1;
+      border-radius: 6px;
+    }
+
+    .navbar_text:hover {
+      background-color: #3e3d2f;
+      color: whitesmoke;
+      font-style: italic;
+    }
+  }
+
+    @media (max-width: 576px) {
+      .navbar_text {
+        font-size: 13px;
+        width: 80px;
+        padding: 0;
+        margin: 0;
+        margin-right: 1px;
+        text-align: center;
+        font-weight: 400;
+        color: #2a2330;
+      }
+      .nav_divider {
+        visibility: hidden;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
+        font-size: 4px;
+      }
+      .navbar_nav {
+        margin-top: 10px;
+        margin-left: 83%;
+        padding-top: 8px;
+      }
+
+      .navbar_text:active {
+        background-color: #3e3d2f;
+        color: whitesmoke;
+        font-style: italic;
+      }
+
+    }
+/* 
+  .nav_items {
+    align-items: center;
+    margin-top: 3px;
+    margin-right: -35px;
+    margin-left: 20px;
+  
+  } */
+
+
+}
