@@ -56,13 +56,6 @@ class UserById(Resource):
 
         return make_response(user.to_dict(), 200)
         
-    def delete(self, id):
-        user = User.query.filter_by(id=id).first()
-        if not user:
-            return make_response({'error': 'User not found'}, 404)
-        db.session.delete(user)
-        db.session.commit()
-        return make_response({'message': 'User deleted'}, 200)
 
 api.add_resource(UserById, '/api/v1/users/<int:id>')
 
@@ -99,6 +92,11 @@ def login():
 def index():
     return '<h1>PageTurner Server</h1>'
 
+@app.before_request
+def check_logged_id():
+    # ipdb.set_trace()
+    if request.endpoint in ['createbookclub'] and not session.get('user_id'):
+        return make_response({'error': 'Unauthorized'}, 401)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

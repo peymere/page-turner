@@ -67,6 +67,9 @@ instance
 .vscode
 package-lock.json
 
+# Exclude backups directory
+backups/
+
 # testing
 /coverage
 
