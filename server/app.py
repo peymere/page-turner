@@ -41,17 +41,20 @@ class UserById(Resource):
             return make_response(user.to_dict(), 200)
         
     def patch(self, id):
-        user = User.query.filter_by(User.id == id).first()
+        user = User.query.filter_by(id=id).first()
         if not user:
             return make_response({'error': 'User not found'}, 404)
-        else:
-            for attr in request.form:
-                setattr(user, attr, request.form[attr])
+        params = request.json
+        try:
+            for attr in params:
+                setattr(user, attr, params[attr])
                 user.updated_at = datetime.utcnow()
-            db.session.add(user)
-            db.session.commit()
+        except Exception as e:
+            print(f"Error updating user: {e}")
+            return make_response({'error': 'Invalid request'}, 500)    
+        db.session.commit()
 
-            return make_response(user.to_dict(), 200)
+        return make_response(user.to_dict(), 200)
         
 
 api.add_resource(UserById, '/api/v1/users/<int:id>')
