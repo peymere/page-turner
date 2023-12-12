@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -8,12 +8,26 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 // local imports
 import styles from '../stylesheets/UserProfile.module.css';
+import { OutletContext } from './App';
+
+
 
 const UserProfile = () => {
     const { id } = useParams();
+    const { setShowAlert } = useContext(OutletContext);
     const [user, setUser] = useState(null);
     const [editProfile, setEditProfile] = useState(false);
     const [editedUser, setEditedUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
+    
+    const navigate = useNavigate();
+
+    // Modal States
+    const [deleteModalShow, setDeleteModalShow] = useState(false);
+    const handleClose = () => setDeleteModalShow(false);
+    const handleShow = () => setDeleteModalShow(true);
+
+
 
     useEffect(() => {
         if (id) {
@@ -36,12 +50,13 @@ const UserProfile = () => {
         }
     }, [id]);
 
-
+    // profile creation date
     function formatDate(dateString) {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     }
 
+    //  Edit user profile functions lines 53-91
     function handleEditProfileClick() {
         setEditProfile(!editProfile);
     }
@@ -82,6 +97,61 @@ const UserProfile = () => {
             .catch((error) => console.error('Error updating user:', error));
     }
 
+    // Delete user profile functions lines 93-122
+    
+
+    function handleDeleteProfile() {
+        
+        fetch(`/users/${id}`, {
+            method: 'DELETE',
+        })
+            .then((r) => {
+                if (!r.ok) {
+                    throw Error('Failed to delete user');
+                }
+                return r.json();
+            })
+            .then((deletedUser) => {
+                console.log('User deleted successfully', deletedUser);
+            })
+            .catch((error) => console.error('Error deleting user:', error));
+        handleClose();
+        navigate('/');
+        setShowAlert(true);
+    }
+
+    // Defining delete profile Modal component
+    function MyModal(props) {
+        return (
+            <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                    Delete your account
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Are you sure you want to delete your account?</h4>
+                    <p>
+                    This action cannot be undone. You will lose all of your account information including your bookshelf and book club memberships.
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={handleDeleteProfile}>
+                        Yes, delete my account
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+
     if (!user) {
         <h1> User not found </h1>
     }
@@ -90,6 +160,7 @@ const UserProfile = () => {
 
     return (
         <div className={styles.profile_container}>
+
             <div className={styles.profile_components}>
             <div >
                 <img 
@@ -201,6 +272,14 @@ const UserProfile = () => {
                         Submit
                     </Button>
                 </Form>
+                <Button variant="secondary" size="sm" onClick={handleShow}>
+                    Delete your account
+                </Button>
+                <MyModal
+                    show={deleteModalShow}
+                    onHide={() => setDeleteModalShow(false)}
+                />
+                
             </div>
             
         ) : (

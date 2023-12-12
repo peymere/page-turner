@@ -1,12 +1,16 @@
 import { useState, useEffect, createContext } from 'react';
-import '../stylesheets/App.css';
+import { Alert, Fade } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import NavBar from './NavBar';
+
+// local imports
+import '../stylesheets/App.css';
 
 export const OutletContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null)
+  const [showAlert, setShowAlert] = useState(false);
   
 
   useEffect(() => {
@@ -22,7 +26,17 @@ function App() {
     })
   }, [])
 
-  const context = {user, setUser}
+  useEffect(() => {
+    if (showAlert) {
+        const timerId = setTimeout(() => {
+            setShowAlert(false);
+        }, 2000);
+
+        return () => clearTimeout(timerId);
+    }
+  }, [showAlert]);
+
+  const context = {user, setUser, setShowAlert}
 
   
   return (
@@ -30,9 +44,18 @@ function App() {
       <header>
         <NavBar user={user} setUser={setUser} />
       </header>
-      <OutletContext.Provider value={{user, setUser}}>
+      <div className='landing_container'>
+      {showAlert && (
+        <Fade in={showAlert} className='pt-4' >
+          <Alert key="info" variant="info">
+              Your account has been successfully deleted.
+          </Alert>
+        </Fade>
+      )}
+      <OutletContext.Provider value={{user, setUser, setShowAlert}}>
       <Outlet context={context}/>
       </OutletContext.Provider>
+      </div>
     </div>
   );
 
