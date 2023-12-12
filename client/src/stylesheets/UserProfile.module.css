@@ -1,0 +1,13 @@
+.profile_container {
+    .profile_components {
+        padding-top: 100px;
+    }
+
+    .profile_pic {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 5px solid #F3EDD2;
+        margin-bottom: 20px;
+    }
+}
