@@ -54,6 +54,7 @@ jspm_packages
 # pytest cache
 .pytest_cache
 __pycache__
+*.pyc
 
 
 # database
@@ -10571,3 +10572,4 @@ client/node_modules/deep-equal/test/cmp.js
 client/node_modules/deep-is/.travis.yml
 client/node_modules/deep-is/LICENSE
 client/node_modules/deep-is/README.markdown
+server/__pycache__/app.cpython-38.pyc
