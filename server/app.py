@@ -41,18 +41,21 @@ class UserById(Resource):
             return make_response(user.to_dict(), 200)
         
     def patch(self, id):
-        user = User.query.filter_by(id=id).first()
-        if not user:
-            return make_response({'error': 'User not found'}, 404)
-        params = request.json
-        try:
-            for attr in params:
-                setattr(user, attr, params[attr])
-                user.updated_at = datetime.utcnow()
-        except Exception as e:
-            print(f"Error updating user: {e}")
-            return make_response({'error': 'Invalid request'}, 500)    
-        db.session.commit()
+        if id != session.get('user_id'):
+            return make_response({'error': 'Unauthorized'}, 401)
+        else:
+            user = User.query.filter_by(id=id).first()
+            if not user:
+                return make_response({'error': 'User not found'}, 404)
+            params = request.json
+            try:
+                for attr in params:
+                    setattr(user, attr, params[attr])
+                    user.updated_at = datetime.utcnow()
+            except Exception as e:
+                print(f"Error updating user: {e}")
+                return make_response({'error': 'Invalid request'}, 500)    
+            db.session.commit()
 
         return make_response(user.to_dict(), 200)
         

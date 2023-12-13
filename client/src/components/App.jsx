@@ -9,16 +9,16 @@ import '../stylesheets/App.css';
 export const OutletContext = createContext();
 
 function App() {
-  const [user, setUser] = useState(null)
+  const [loggedInUser, setLoggedInUser] = useState(null)
+  console.log(loggedInUser)
   const [showAlert, setShowAlert] = useState(false);
   
-
   useEffect(() => {
     fetch('/authorized')
     .then((resp) => {
       if (resp.ok) {
-        resp.json().then((user) => setUser(user))
-        console.log(user)
+        resp.json().then((user) => setLoggedInUser(user))
+        console.log(loggedInUser)
       } else {
         // handle what should happen if not logged in
         console.log('error')
@@ -36,13 +36,13 @@ function App() {
     }
   }, [showAlert]);
 
-  const context = {user, setUser, setShowAlert}
+  const context = {loggedInUser, setLoggedInUser, setShowAlert}
 
   
   return (
     <div className="App">
       <header>
-        <NavBar user={user} setUser={setUser} />
+        <NavBar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
       </header>
       <div className='landing_container'>
       {showAlert && (
@@ -52,8 +52,8 @@ function App() {
           </Alert>
         </Fade>
       )}
-      <OutletContext.Provider value={{user, setUser, setShowAlert}}>
-      <Outlet context={context}/>
+      <OutletContext.Provider value={{loggedInUser, setLoggedInUser, setShowAlert}}>
+        <Outlet context={context}/>
       </OutletContext.Provider>
       </div>
     </div>

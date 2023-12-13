@@ -12,10 +12,10 @@ import styles from '../stylesheets/Login.module.css'
 import { OutletContext } from './App'
 
 function Login() {
-    const { setUser } = useContext(OutletContext)
+    const { setLoggedInUser } = useContext(OutletContext)
     const navigate = useNavigate()
-    
 
+    
     const loginSchema = Yup.object({
             email: Yup.string().email('Invalid Email Address'),
             username: Yup.string()
@@ -28,8 +28,8 @@ function Login() {
             lastName: Yup.string()
                 .min(2, "Last name must be at least 2 characters")
                 ,
-        }
-    )
+        })
+
     const passwordValidationSchema = Yup.object().shape({
         password: Yup.string()
             .min(8, 'Password must be at least 8 characters')
@@ -72,7 +72,7 @@ function Login() {
                     
                     resetForm({values: ''})
                     resp.json().then(({ user }) => {
-                        setUser(user)
+                        setLoggedInUser(user)
                         console.log(user)
                         // navigate into site
                         navigate('/home')

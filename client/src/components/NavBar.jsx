@@ -9,7 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import styles from '../stylesheets/NavBar.module.css'
 
 
-function NavBar({user, setUser}) {
+function NavBar({loggedInUser, setLoggedInUser}) {
     
 
     function handleLogout() {
@@ -17,7 +17,7 @@ function NavBar({user, setUser}) {
             method: 'DELETE'
         }).then((r) => {
             if (r.ok) {
-                setUser(null)
+                setLoggedInUser(null)
                 console.log('logged out')
                 //navigate to landing page
             }
@@ -45,17 +45,17 @@ function NavBar({user, setUser}) {
                     <Nav className="me-1 navbar_nav">
                         <Nav.Link href="/home" className='navbar_text'>Home</Nav.Link> <p className='nav_divider'>|</p>
                         <Nav.Link href="/search" className='navbar_text'>Discover</Nav.Link> <p className='nav_divider'>|</p>
-                        {!user ? (
+                        {!loggedInUser ? (
                         <>
                             <Nav.Link href='/login' className='navbar_text'>Login</Nav.Link> 
                             <p className='nav_divider'>|</p>
                         </> ) : (
                         <>
-                            <Nav.Link href={`/userprofile/${user.id}`} className='navbar_text'>Dashboard</Nav.Link>
+                            <Nav.Link href={`/userprofile/${loggedInUser.id}`} className='navbar_text'>Dashboard</Nav.Link>
                             <p className='nav_divider'>|</p>
                         </>
                         )}
-                        {!user ? (
+                        {!loggedInUser ? (
                         <>
                             <Nav.Link href='/signup' className='navbar_text'>Sign Up</Nav.Link>
                             <p className='nav_divider'>|</p> 

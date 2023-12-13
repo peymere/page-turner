@@ -14,20 +14,19 @@ import { OutletContext } from './App';
 
 const UserProfile = () => {
     const { id } = useParams();
-    const { setShowAlert } = useContext(OutletContext);
+    console.log(id)
+    const { setShowAlert, loggedInUser } = useContext(OutletContext);
     const [user, setUser] = useState(null);
     const [editProfile, setEditProfile] = useState(false);
     const [editedUser, setEditedUser] = useState(null);
-    const [currentUser, setCurrentUser] = useState(null);
-    
+    // console.log('User state:', user);
+    // console.log(loggedInUser)
     const navigate = useNavigate();
 
     // Modal States
     const [deleteModalShow, setDeleteModalShow] = useState(false);
     const handleClose = () => setDeleteModalShow(false);
     const handleShow = () => setDeleteModalShow(true);
-
-
 
     useEffect(() => {
         if (id) {
@@ -56,7 +55,7 @@ const UserProfile = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     }
 
-    //  Edit user profile functions lines 53-91
+    //  Edit user profile functions lines 58-97
     function handleEditProfileClick() {
         setEditProfile(!editProfile);
     }
@@ -97,9 +96,7 @@ const UserProfile = () => {
             .catch((error) => console.error('Error updating user:', error));
     }
 
-    // Delete user profile functions lines 93-122
-    
-
+    // Delete user profile functions lines 100-118
     function handleDeleteProfile() {
         
         fetch(`/users/${id}`, {
@@ -171,9 +168,12 @@ const UserProfile = () => {
                 <h2>{`${user['first_name']}'s Profile`}</h2>
                 <h3>@{user.username}</h3>
                 <h6>Member since {formatDate(user.created_at)}</h6>
-                <Button onClick={handleEditProfileClick}>
-                    {!editProfile ? "Edit Profile" : "Cancel" } 
-                </Button>
+                {loggedInUser && loggedInUser.id === user.id ? (
+                    <Button onClick={handleEditProfileClick}>
+                        {!editProfile ? "Edit Profile" : "Cancel" } 
+                    </Button>) : 
+                    ( <div></div> )
+                }
             </div>
             {editProfile ? (
             <div>
@@ -278,18 +278,14 @@ const UserProfile = () => {
                 <MyModal
                     show={deleteModalShow}
                     onHide={() => setDeleteModalShow(false)}
-                />
-                
-            </div>
-            
-        ) : (
-            <div></div>
-        )}
+                />  
+            </div> ) : 
+            ( <div></div> )
+        }
             
         </div>
         </div>
     );
-
 };
 }
 
