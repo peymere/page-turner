@@ -1,7 +1,11 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.orm import validates
+import re
 
+# local imports
 from config import db, bcrypt
+
 
 # Models
 class User(db.Model, SerializerMixin):
@@ -27,6 +31,58 @@ class User(db.Model, SerializerMixin):
 
     # serialize rules
     serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner')
+
+    # validation rules
+    @validates('first_name', 'last_name')
+    def validate_name(self, key, new_name):
+        if len(new_name) < 2:
+            raise ValueError(f"{key} must be at least 2 characters")
+        if not new_name:
+            raise ValueError(f"{key} is required")
+        return new_name
+    
+    @validates('username')
+    def validate_username(self, key, new_username):
+        if 3 > len(new_username) > 15 :
+            raise ValueError(f"{key} must be between 3 and 15 characters")
+        if not new_username:
+            raise ValueError(f"{key} is required")
+        return new_username
+
+    @validates('password_hash')
+    def validate_password(self, key, new_password):
+        if 8 > len(new_password) > 20:
+            raise ValueError(f"{key} must be between 8 and 20 characters")
+        if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]', new_password):
+            raise ValueError(f"{key} must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number")
+        if not new_password:
+            raise ValueError(f"password is required")
+        return new_password
+    
+    @validates('email')
+    def validate_email(self, key, new_email):
+        emails = [u.email for u in User.query.all()]
+        if new_email in emails:
+            raise ValueError(f"{key} is already in use")
+        if not new_email:
+            raise ValueError(f"{key} is required")
+        if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', new_email):
+            raise ValueError(f"{key} must be a valid email address")
+        return new_email
+    
+    @validates('profile_pic')
+    def validate_profile_pic(self, key, new_profile_pic):
+        if new_profile_pic:
+            if not re.match(r'^https?:\/\/.*\.(?:png|jpg|gif|jpeg|svg)$', new_profile_pic):
+                raise ValueError(f"{key} must be a valid image url")
+        return new_profile_pic
+    
+    @validates('about_me')
+    def validate_about_me(self, key, new_about_me):
+        if new_about_me:
+            if len(new_about_me) > 300:
+                raise ValueError(f"{key} must be less than 300 characters")
+        return new_about_me
 
     @property
     def password_hash(self):

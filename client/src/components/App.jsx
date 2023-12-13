@@ -31,14 +31,12 @@ function App() {
         const timerId = setTimeout(() => {
             setShowAlert(false);
         }, 2000);
-
         return () => clearTimeout(timerId);
     }
   }, [showAlert]);
 
   const context = {loggedInUser, setLoggedInUser, setShowAlert}
 
-  
   return (
     <div className="App">
       <header>
