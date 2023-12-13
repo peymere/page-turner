@@ -14,7 +14,7 @@ import styles from '../stylesheets/Signup.module.css'
 import { OutletContext } from './App'
 
 function Signup() {
-    const { setUser } = useContext(OutletContext)
+    const { setLoggedInUser } = useContext(OutletContext)
     const [type, setType] = useState('password');
     const [icon, setIcon] = useState(<Eye/>);
     const navigate = useNavigate()
@@ -77,7 +77,7 @@ function Signup() {
                 if (r.ok) {
                     resetForm({values: ''})
                     r.json().then(({user}) => {
-                        setUser(user)
+                        setLoggedInUser(user)
                         //navigate into site
                         navigate('/home')
                     })

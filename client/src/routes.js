@@ -16,7 +16,6 @@ import Search from './components/Search';
 import Signup from './components/Signup';
 import UserProfile from './components/UserProfile';
 
-
 const routes = [
     {
         path: '/',
@@ -52,7 +51,6 @@ const routes = [
                         element: <BookProfile />
                     }
                 ]
-
             },
             {
                 path: '/bookclubs',
