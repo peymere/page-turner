@@ -12,6 +12,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState(null)
   console.log(loggedInUser)
   const [showAlert, setShowAlert] = useState(false);
+  const [bookClubs, setBookClubs] = useState(null)
   
   useEffect(() => {
     fetch('/authorized')
@@ -27,6 +28,22 @@ function App() {
   }, [])
 
   useEffect(() => {
+    fetch('/bookclubs')
+    .then((resp) => {
+      if (resp.ok) {
+        return resp.json()
+      } else {
+        console.log('error')
+      }
+      })
+    .then((bookClubsData) => setBookClubs(bookClubsData))
+    .catch((err) => {
+      console.log("Error getting bookclubs:", err);
+    })
+  }, [])
+
+
+  useEffect(() => {
     if (showAlert) {
         const timerId = setTimeout(() => {
             setShowAlert(false);
@@ -35,7 +52,7 @@ function App() {
     }
   }, [showAlert]);
 
-  const context = {loggedInUser, setLoggedInUser, setShowAlert}
+  const context = {loggedInUser, setLoggedInUser, setShowAlert, bookClubs}
 
   return (
     <div className="App">
@@ -50,7 +67,7 @@ function App() {
           </Alert>
         </Fade>
       )}
-      <OutletContext.Provider value={{loggedInUser, setLoggedInUser, setShowAlert}}>
+      <OutletContext.Provider value={{loggedInUser, setLoggedInUser, setShowAlert, bookClubs}}>
         <Outlet context={context}/>
       </OutletContext.Provider>
       </div>

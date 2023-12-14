@@ -97,6 +97,7 @@ class BookClubs(Resource):
         except Exception as e:
             print(f"Error creating book club: {e}")
             return make_response({'error': 'Invalid request'}, 500)
+
 api.add_resource(BookClubs, '/api/v1/bookclubs')
 
 class BookClubById(Resource):

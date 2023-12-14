@@ -43,7 +43,6 @@ def seed_book_clubs():
         book_club = BookClub(
             name=fake.company(),
             description=fake.text(max_nb_chars=300),
-            avatar_url=fake.image_url(),
             created_at=fake.date_time_this_year(),
             updated_at=fake.date_time_this_year(),
             owner_id=randint(1, 10)
@@ -56,8 +55,15 @@ if __name__ == '__main__':
     with app.app_context():
         print("Clearing database...")
         User.query.delete()
+        BookClub.query.delete()
 
         print("Starting seed...")
+        print("Seeding users...")
         users = seed_users()
         db.session.add_all(users)
+        db.session.commit()
+
+        print("Seeding book clubs...")
+        book_clubs = seed_book_clubs()
+        db.session.add_all(book_clubs)
         db.session.commit()
