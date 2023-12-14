@@ -55,20 +55,18 @@ const routes = [
             {
                 path: '/bookclubs',
                 element: <BookClubs />,
+            },
+            {
+                path: '/bookclubs/:id',
+                element: <ClubProfile />,
                 children: [
                     {
-                        path: '/bookclubs/:id',
-                        element: <ClubProfile />,
-                        children: [
-                            {
-                                path: '/bookclubs/:id/members',
-                                element: <ClubMembers />
-                            },
-                            {
-                                path: '/bookclubs/:id/books',
-                                element: <ClubBooks />
-                            }
-                        ]
+                        path: '/bookclubs/:id/members',
+                        element: <ClubMembers />
+                    },
+                    {
+                        path: '/bookclubs/:id/books',
+                        element: <ClubBooks />
                     }
                 ]
             },

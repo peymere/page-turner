@@ -129,6 +129,16 @@ class BookClubById(Resource):
 
         return make_response(book_club.to_dict(), 200)
 api.add_resource(BookClubById, '/api/v1/bookclubs/<int:id>')
+
+class BookClubUsers(Resource):
+    def get(self):
+        book_club_users = [bcu.to_dict() for bcu in BookClubUser.query.all()]
+        return make_response(
+            book_club_users,
+            200
+        )
+
+api.add_resource(BookClubUsers, '/api/v1/bookclubsusers')
     
 
 @app.route('/api/v1/authorized')
