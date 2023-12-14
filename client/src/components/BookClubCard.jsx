@@ -1,4 +1,8 @@
 import React from "react";
+import { NavItem } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
 
 function BookClubCard({ bookClub }) {
     // console.log('bookclub card:', bookClub)
@@ -10,13 +14,19 @@ function BookClubCard({ bookClub }) {
 
 
     return (
-        <div>
-            {/* <h1>Book Club Card</h1> */}
-            <h2>{name}</h2>
-            <img src={avatar_url} alt="book club avatar" />
-            <p>{description}</p>
-        </div>
+        <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={avatar_url ? avatar_url : "/src_images/placeholder_bookclub_avatar.jpeg"} alt="profile pic"  />
+            <Card.Body>
+                <Card.Title>{name}</Card.Title>
+                <Card.Text>
+                {description}
+                </Card.Text>
+                <Button variant="primary">Learn More</Button>
+            </Card.Body>
+        </Card>
     )
+
+    
 }
 
 export default BookClubCard;

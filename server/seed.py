@@ -43,7 +43,6 @@ def seed_book_clubs():
         book_club = BookClub(
             name=fake.company(),
             description=fake.text(max_nb_chars=300),
-            avatar_url=fake.image_url(),
             created_at=fake.date_time_this_year(),
             updated_at=fake.date_time_this_year(),
             owner_id=randint(1, 10)
