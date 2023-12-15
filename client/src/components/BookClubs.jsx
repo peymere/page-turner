@@ -1,8 +1,10 @@
 import { useEffect, useState, useContext } from "react"
 import { Row, Col, Card, Button } from "react-bootstrap"
+import { NavLink } from "react-router-dom"
 
 // local imports
 import { OutletContext } from './App'
+
 
 function BookClubs() {
     const { bookClubs } = useContext(OutletContext)
@@ -21,7 +23,7 @@ function BookClubs() {
                         <Card.Text className="text-truncate">
                             {bookClub.description}
                         </Card.Text>
-                        <Button variant="primary">Learn More</Button>
+                        <Button variant="primary"> <NavLink to={`/bookclubs/${bookClub.id}`}>Learn More</NavLink></Button>
                     </Card.Body>
                 </Card>
             </Col>

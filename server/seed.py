@@ -21,7 +21,7 @@ def hash_password(password):
 
 def seed_users():
     users = []
-    for _ in range(0, 10):
+    for _ in range(0, 20):
         password = fake.password()
         hashed_password = hash_password(password)
 
@@ -45,10 +45,21 @@ def seed_book_clubs():
             description=fake.text(max_nb_chars=300),
             created_at=fake.date_time_this_year(),
             updated_at=fake.date_time_this_year(),
-            owner_id=randint(1, 10)
+            owner_id=randint(1, 20)
         )
         book_clubs.append(book_club)
     return book_clubs
+
+def seed_book_club_users():
+    book_club_users = []
+    for _ in range(0, 30):
+        book_club_user = BookClubUser(
+            user_id=randint(1, 20),
+            book_club_id=randint(1, 10),
+            joined_at=fake.date_time_this_year()
+        )
+        book_club_users.append(book_club_user)
+    return book_club_users
 
 
 if __name__ == '__main__':
@@ -67,3 +78,10 @@ if __name__ == '__main__':
         book_clubs = seed_book_clubs()
         db.session.add_all(book_clubs)
         db.session.commit()
+
+        print("Seeding book club users...")
+        book_club_users = seed_book_club_users()
+        db.session.add_all(book_club_users)
+        db.session.commit()
+
+        print("Seed complete!")
