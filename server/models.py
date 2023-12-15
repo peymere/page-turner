@@ -30,7 +30,7 @@ class User(db.Model, SerializerMixin):
     book_clubs = association_proxy('book_clubs_joined', 'book_club')
 
     # serialize rules
-    serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner', '-updated_at', '-book_clubs_joined.members', '-book_clubs_owned.members')
+    serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner', '-updated_at', '-book_clubs_joined.members', '-book_clubs_owned.members', )
 
     # validation rules
     @validates('first_name', 'last_name')
@@ -123,6 +123,20 @@ class BookClub(db.Model, SerializerMixin):
 
     # serialize rules
     serialize_rules = ('-owner.book_clubs_owned', '-users_joined', '-owner.book_clubs_joined', '-owner_id', '-owner.created_at', '-members.book_clubs_joined', '-updated_at', '-members.book_clubs_owned')
+
+    @validates('avatar_url')
+    def validate_avatar_url(self, key, new_avatar_url):
+        if new_avatar_url:
+            if not re.match(r'^https?:\/\/.*\.(?:png|jpg|gif|jpeg|svg)$', new_avatar_url):
+                raise ValueError(f"{key} must be a valid image url")
+        return new_avatar_url
+
+    @validates('description')
+    def validate_description(self, key, new_description):
+        if new_description:
+            if len(new_description) > 300:
+                raise ValueError(f"{key} must be less than 300 characters")
+        return new_description
 
     def __repr__(self):
         return f"<BookClub #{self.id}: {self.name}>"
