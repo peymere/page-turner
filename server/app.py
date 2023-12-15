@@ -45,7 +45,7 @@ class UserById(Resource):
         if not user:
             return make_response({'error': 'User not found'}, 404)
         else:
-            return make_response(user.to_dict(), 200)
+            return make_response(user.to_dict(rules=('book_clubs', '-book_clubs_joined')), 200)
         
     def patch(self, id):
         if id != session.get('user_id'):

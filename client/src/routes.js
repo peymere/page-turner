@@ -71,7 +71,7 @@ const routes = [
                 ]
             },
             {
-                path: '/createbookclub',
+                path: '/create_book_club',
                 element: <CreateBookClub />
             },
             {

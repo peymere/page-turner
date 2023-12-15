@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, NavLink } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 
 // local imports
@@ -112,6 +112,17 @@ const UserProfile = () => {
             </Modal>
         )
     }
+    console.log('User Object:', user)
+    console.log("user's bookclubs:", user?.book_clubs)
+
+    const get_book_club = (book_clubs) => {
+    if (book_clubs?.length > 0) {
+        for (const book_club of book_clubs) {
+            console.log(book_club.name);  // Access the 'name' property of each book club
+        }
+    }
+}
+    get_book_club(user?.book_clubs)
 
     if (!user) {
         <h1> User not found </h1>
@@ -152,7 +163,22 @@ const UserProfile = () => {
             </div> ) : 
             ( <div></div> )
         }
-            
+         <div className={styles.lists_container}>
+                <div >
+                    <h5>{`${user.first_name}'s Clubs:`}</h5>
+                    <ul className={styles.users_lists}>
+                        {user?.book_clubs.map((book_club, idx) => (
+                            <li key={idx}>
+                            <NavLink href={`/bookclubs/${book_club.id}`}>
+                                
+                                {book_club.name}
+                            
+                            </NavLink>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>   
         </div>
         </div>
     );

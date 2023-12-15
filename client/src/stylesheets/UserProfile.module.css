@@ -1,6 +1,7 @@
 .profile_container {
     .profile_components {
         padding-top: 100px;
+        font-family: 'Questrial', sans-serif;
     }
 
     .profile_pic {
@@ -9,5 +10,17 @@
         border-radius: 50%;
         border: 5px solid #ADAC9A;
         margin-bottom: 20px;
+    }
+
+    .lists_container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .users_lists {
+        list-style: none;
     }
 }
