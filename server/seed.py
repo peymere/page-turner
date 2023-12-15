@@ -78,3 +78,10 @@ if __name__ == '__main__':
         book_clubs = seed_book_clubs()
         db.session.add_all(book_clubs)
         db.session.commit()
+
+        print("Seeding book club users...")
+        book_club_users = seed_book_club_users()
+        db.session.add_all(book_club_users)
+        db.session.commit()
+
+        print("Seed complete!")

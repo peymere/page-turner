@@ -73,7 +73,7 @@ api.add_resource(UserById, '/api/v1/users/<int:id>')
 
 class BookClubs(Resource):
     def get(self):
-        book_clubs = [bc.to_dict() for bc in BookClub.query.all()]
+        book_clubs = [bc.to_dict(rules=('-users_joined', '-members', '-owner')) for bc in BookClub.query.all()]
         return make_response(
             book_clubs,
             200
@@ -106,7 +106,7 @@ class BookClubById(Resource):
         if not book_club:
             return make_response({'error': 'Book club not found'}, 404)
         else:
-            return make_response(book_club.to_dict(), 200)
+            return make_response(book_club.to_dict(rules=('members',)), 200)
         
     def patch(self, id):
         if id != session.get('user_id'):

@@ -25,12 +25,12 @@ class User(db.Model, SerializerMixin):
 
     # relationships
     book_clubs_owned = db.relationship('BookClub', back_populates='owner', cascade='all, delete-orphan')
-    book_clubs_joined = db.relationship('BookClubUser', back_populates='user', cascade='all, delete-orphan')
+    book_clubs_joined = db.relationship('BookClubUser', back_populates='user', cascade='all, delete-orphan', lazy='dynamic')
     # proxy for book_clubs_joined.book_club
     book_clubs = association_proxy('book_clubs_joined', 'book_club')
 
     # serialize rules
-    serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner')
+    serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner', '-updated_at', '-book_clubs_joined.members', '-book_clubs_owned.members')
 
     # validation rules
     @validates('first_name', 'last_name')
@@ -117,12 +117,12 @@ class BookClub(db.Model, SerializerMixin):
 
     # relationships
     owner = db.relationship('User', back_populates='book_clubs_owned')
-    users_joined = db.relationship('BookClubUser', back_populates='book_club', cascade='all, delete-orphan')
+    users_joined = db.relationship('BookClubUser', back_populates='book_club', cascade='all, delete-orphan', lazy='dynamic')
     # proxy for users_joined.user
     members = association_proxy('users_joined', 'user')
 
     # serialize rules
-    serialize_rules = ('-owner.book_clubs_owned', '-users_joined.book_club')
+    serialize_rules = ('-owner.book_clubs_owned', '-users_joined', '-owner.book_clubs_joined', '-owner_id', '-owner.created_at', '-members.book_clubs_joined', '-updated_at', '-members.book_clubs_owned')
 
     def __repr__(self):
         return f"<BookClub #{self.id}: {self.name}>"
