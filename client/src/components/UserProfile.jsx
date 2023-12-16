@@ -46,7 +46,6 @@ const UserProfile = () => {
                 });
         }
     }, [id]);
-    // loggedInUser ? console.log(loggedInUser['first_name']) : console.log('no user')
 
     // profile creation date
     function formatDate(dateString) {
@@ -62,7 +61,10 @@ const UserProfile = () => {
 
     // Delete user profile functions lines 100-118
     function handleDeleteProfile() {
-        
+        if (loggedInUser.id !== user.id) {
+            console.log('You are not authorized to delete this profile');
+            return;
+        }
         fetch(`/users/${id}`, {
             method: 'DELETE',
         })
