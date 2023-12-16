@@ -15,6 +15,7 @@ import MyBookClubs from './components/MyBookClubs';
 import Search from './components/Search';
 import Signup from './components/Signup';
 import UserProfile from './components/UserProfile';
+import EditBookClub from './components/EditBookClub';
 
 const routes = [
     {
@@ -57,16 +58,20 @@ const routes = [
                 element: <BookClubs />,
             },
             {
-                path: '/bookclubs/:id',
+                path: '/bookclubs/:id/*',
                 element: <ClubProfile />,
                 children: [
                     {
-                        path: '/bookclubs/:id/members',
+                        path: 'members',
                         element: <ClubMembers />
                     },
                     {
-                        path: '/bookclubs/:id/books',
+                        path: 'books',
                         element: <ClubBooks />
+                    },
+                    {
+                        path: 'edit',
+                        element: <EditBookClub />
                     }
                 ]
             },
