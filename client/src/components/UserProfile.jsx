@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button, Modal, NavLink } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
+import { LiaCrownSolid } from "react-icons/lia";
+
 
 // local imports
 import styles from '../stylesheets/UserProfile.module.css';
@@ -9,15 +11,14 @@ import EditProfile from './EditProfile';
 
 const UserProfile = () => {
     const { id } = useParams();
-    console.log(id)
     const { setShowAlert, loggedInUser } = useContext(OutletContext);
     const [user, setUser] = useState(null);
     const [editProfile, setEditProfile] = useState(false);
     const [editedUser, setEditedUser] = useState(null);
     const [formErrors, setFormErrors] = useState([]);
-    console.log('User state:', user);
 
-    console.log('First Check:',loggedInUser)
+
+   
     const navigate = useNavigate();
 
     // Modal States
@@ -36,7 +37,7 @@ const UserProfile = () => {
                     }
                 })
                 .then((user) => {
-                    // console.log(user);
+                
                     setUser(user);
                     setEditedUser(user);
                 })
@@ -45,7 +46,6 @@ const UserProfile = () => {
                 });
         }
     }, [id]);
-    console.log('After user fetch:',loggedInUser)
     loggedInUser ? console.log(loggedInUser['first_name']) : console.log('no user')
 
     // profile creation date
@@ -112,17 +112,17 @@ const UserProfile = () => {
             </Modal>
         )
     }
-    console.log('User Object:', user)
-    console.log("user's bookclubs:", user?.book_clubs)
+    // console.log('User Object:', user)
+    // console.log("user's bookclubs:", user?.book_clubs_owned)
 
-    const get_book_club = (book_clubs) => {
-    if (book_clubs?.length > 0) {
-        for (const book_club of book_clubs) {
-            console.log(book_club.name);  // Access the 'name' property of each book club
-        }
-    }
-}
-    get_book_club(user?.book_clubs)
+//     const get_book_club = (book_clubs) => {
+//     if (book_clubs?.length > 0) {
+//         for (const book_club of book_clubs) {
+//             console.log(book_club.name);
+//         }
+//     }
+// }
+    // get_book_club(user?.book_clubs)
 
     if (!user) {
         <h1> User not found </h1>
@@ -144,9 +144,17 @@ const UserProfile = () => {
                 <h3>@{user.username}</h3>
                 <h6>Member since {formatDate(user.created_at)}</h6>
                 {loggedInUser && loggedInUser.id === user.id ? (
+                    <div>
                     <Button onClick={handleEditProfileClick}>
                         {!editProfile ? "Edit Profile" : "Cancel" } 
-                    </Button>) : 
+                    </Button>
+                    <Button>
+                        <NavLink href={`/create_book_club`}>
+                            Create a Book Club
+                        </NavLink>
+                    </Button>
+                    </div>
+                    ) : 
                     ( <div></div> )
                 }
             </div>
@@ -163,16 +171,23 @@ const UserProfile = () => {
             </div> ) : 
             ( <div></div> )
         }
-         <div className={styles.lists_container}>
+        <div className={styles.lists_container}>
                 <div >
                     <h5>{`${user.first_name}'s Clubs:`}</h5>
                     <ul className={styles.users_lists}>
+                        {user?.book_clubs_owned.map((book_club, idx) => (
+                            <li key={idx}>
+                            
+                            <NavLink href={`/bookclubs/${book_club.id}`}>
+                                <LiaCrownSolid />
+                                {book_club.name}
+                            </NavLink>
+                            </li>
+                        ))}
                         {user?.book_clubs.map((book_club, idx) => (
                             <li key={idx}>
                             <NavLink href={`/bookclubs/${book_club.id}`}>
-                                
                                 {book_club.name}
-                            
                             </NavLink>
                             </li>
                         ))}

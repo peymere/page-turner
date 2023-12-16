@@ -84,7 +84,7 @@ class BookClubs(Resource):
             book_club = BookClub(
                 name=data['name'], 
                 description=data['description'], 
-                avatar_url=data['avatarUrl'], 
+                avatar_url=data['avatar_url'], 
                 owner_id=session.get('user_id'),
                 created_at=datetime.utcnow(),
                 updated_at=datetime.utcnow()
@@ -177,7 +177,7 @@ def index():
 @app.before_request
 def check_logged_id():
     # ipdb.set_trace()
-    if request.endpoint in ['createbookclub'] and not session.get('user_id'):
+    if request.endpoint in ['create_book_club'] and not session.get('user_id'):
         return make_response({'error': 'Unauthorized'}, 401)
 
 if __name__ == '__main__':
