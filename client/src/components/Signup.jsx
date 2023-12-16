@@ -82,7 +82,7 @@ function Signup() {
                         navigate('/home')
                     })
                 } else {
-                    console.log('Error fetching user')
+                    console.log('Error creating user')
                 }
             })
         }
