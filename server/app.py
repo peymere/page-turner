@@ -137,9 +137,54 @@ class BookClubUsers(Resource):
             book_club_users,
             200
         )
+    def post(self):
+        try:
+            data = request.get_json()
 
-api.add_resource(BookClubUsers, '/api/v1/bookclubsusers')
+            # Checks if user is already a member of the club
+            existing_member = BookClubUser.query.filter_by(user_id=data['user_id'], book_club_id=data['book_club_id']).first()
+            if existing_member:
+                return make_response({'error': 'User is already a member of this club'}, 400)
+
+            # Checks if user is the owner of the club
+            book_club = BookClub.query.get(data['book_club_id'])
+            if book_club.owner_id == data['user_id']:
+                return make_response({'error': 'User is the owner of this club'}, 400)
+
+            book_club_user = BookClubUser(
+                user_id=data['user_id'], 
+                book_club_id=data['book_club_id'], 
+                joined_at=datetime.utcnow()
+            )
+            db.session.add(book_club_user)
+            db.session.commit()
+            return make_response(book_club_user.to_dict(), 201)
+        except ValueError as v_error:
+            return make_response({'error': str(v_error)}, 422)
+        except Exception as e:
+            print(f"Error creating book club user: {e}")
+            return make_response({'error': 'Invalid request'}, 500)
+        
     
+        
+api.add_resource(BookClubUsers, '/api/v1/bookclubsusers')
+
+
+class BookClubUserByUserAndClub(Resource):
+    def delete(self, user_id, book_club_id):
+        try:
+            book_club_user = BookClubUser.query.filter_by(
+                user_id=user_id, book_club_id=book_club_id).first()
+            if not book_club_user:
+                return make_response({'error': 'Book club user not found'}, 404)
+            db.session.delete(book_club_user)
+            db.session.commit()
+            return make_response({'message': 'Book club user deleted'}, 200)
+        except Exception as e:
+            print(f"Error deleting book club user: {e}")
+            return make_response({'error': 'Invalid request'}, 500)
+
+api.add_resource(BookClubUserByUserAndClub, '/api/v1/bookclubsusers/<int:user_id>/<int:book_club_id>')
 
 @app.route('/api/v1/authorized')
 def authorized():

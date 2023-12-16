@@ -46,7 +46,7 @@ const UserProfile = () => {
                 });
         }
     }, [id]);
-    loggedInUser ? console.log(loggedInUser['first_name']) : console.log('no user')
+    // loggedInUser ? console.log(loggedInUser['first_name']) : console.log('no user')
 
     // profile creation date
     function formatDate(dateString) {

@@ -122,7 +122,7 @@ class BookClub(db.Model, SerializerMixin):
     members = association_proxy('users_joined', 'user')
 
     # serialize rules
-    serialize_rules = ('-owner.book_clubs_owned', '-users_joined', '-owner.book_clubs_joined', '-owner_id', '-owner.created_at', '-members.book_clubs_joined', '-updated_at', '-members.book_clubs_owned')
+    serialize_rules = ('-owner.book_clubs_owned', '-users_joined', '-owner.book_clubs_joined', '-owner_id', '-owner.created_at', '-members.book_clubs_joined', '-updated_at', '-members.book_clubs_owned', '-members.username', '-members.about_me', '-members.email', '-members.created_at')
 
     @validates('avatar_url')
     def validate_avatar_url(self, key, new_avatar_url):
