@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react"
 import { useParams, useNavigate, NavLink } from "react-router-dom"
+import { LiaCrownSolid } from "react-icons/lia";
 
 // local imports
 import { OutletContext } from './App'
@@ -46,6 +47,12 @@ function ClubProfile() {
                 <div className={styles.members_list}>
                     <h3>Members</h3>
                     <ul className={styles.users_lists}>
+                        <NavLink to={`/userprofile/${club?.owner.id}`}>
+                            <li>
+                                <LiaCrownSolid />
+                                {club?.owner.first_name} {club?.owner.last_name}
+                            </li>
+                        </NavLink>
                         {club?.members.map((member, idx) => (
                         <NavLink to={`/userprofile/${member.id}`}>
                             <li key={idx}>
