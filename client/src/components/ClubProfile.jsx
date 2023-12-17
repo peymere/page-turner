@@ -184,11 +184,11 @@ function ClubProfile() {
 
     return (
         
-        <div className={styles.bookclub_container}>
+        <body className={styles.bookclub_container}>
             
             <div className={styles.bookclub_components}>
                 
-            <h1>{club?.name}</h1>
+            <h1 >{club?.name}</h1>
             <h5>{`Created by ${club?.owner.first_name} ${club?.owner.last_name} on ${formatDate(club?.created_at)}`}</h5>
             
             <img src={club?.avatar_url ? club?.avatar_url : "/src_images/placeholder_bookclub_avatar.jpeg"} className={styles.bookclub_img}/>
@@ -240,7 +240,7 @@ function ClubProfile() {
                 </div> */}
             </div>
             </div>
-        </div>
+        </body>
     )
 }
 
