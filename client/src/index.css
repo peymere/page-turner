@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Galabiyah';
+  src: url('../public/fonts/galabiyah.otf');
+}
+@font-face {
+  font-family: 'Cenios';
+  src: url('../public/fonts/CeniosdemoRegular-MVKzY.otf');
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,10 +22,11 @@ code {
     monospace;
 }
 
-/* Override Bootstrap placeholder color */
+/* Override Bootstrap */
 :root {
   --placeholder-color: #F0DAAE;
   --placeholder-opacity: 1;
+  --bs-breadcrumb-divider-color: #f3edd2 !important;
 }
 
 /* Override Bootstrap placeholder color */
@@ -25,22 +35,39 @@ code {
   opacity: var(--placeholder-opacity) !important;
 }
 
+.breadcrumb_divider_custom {
+  color: var(--bs-breadcrumb-divider-color) !important;
+}
+
+.breadcrumb:before {
+  color: #f3edd2 !important;
+}
+
+/* Overide Bootstrap link color */
+/* a {
+  color: #f3edd2 !important;
+
+} */
+
 /* Override Bootstrap NavBar */
 .custom_navbar {
   background: #F3EDD2;
-  
+  z-index: 5;
+  position: absolute;
   .pt_logo {
       color: #584446;
-      font-family: 'Unbounded', sans-serif;
-      margin-left: 5px;
-      font-size: 21px;
+      font-family: 'Galabiyah', serif;
+      margin-left: 1px;
+      font-size: 26px;
+      letter-spacing: 1px;
+      
     } 
 
   .navbar_text {
     color: #584446;
-    font-family: 'Questrial', sans-serif;
-    font-size: 17px;
-    font-weight: 400;
+    font-family: poppins, sans-serif;
+    font-size: 16px;
+    font-weight: 200;
     padding-top: 10px;
   }
   .navbar_text:hover {
@@ -49,8 +76,10 @@ code {
 
   .nav_divider {
     color: #584446;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 200;
     padding-top: 5px;
+    font-family: 'poppins', sans-serif;
   }
 
   @media (max-width: 991.98px) {
@@ -132,3 +161,16 @@ code {
 
 
 }
+
+
+/* font options */
+/* 
+font-family: 'Newsreader', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Quicksand', sans-serif; 
+font-family: 'Playfair Display', serif;
+font-family: 'Montserrat', sans-serif;
+font-family: 'Questrial', sans-serif;
+font-family: 'Unbounded', sans-serif;
+font-family: 'Galabiyah', serif;
+*/

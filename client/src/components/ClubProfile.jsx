@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import {Button, Modal, Breadcrumb} from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+
 // local imports
 import { OutletContext } from './App'
 import ClubMembers from "./ClubMembers";
@@ -184,31 +185,41 @@ function ClubProfile() {
 
     return (
         
-        <body className={styles.bookclub_container}>
+        <body className={styles.bookclub_body} >
+        <div className={styles.bookclub_container}>
             
             <div className={styles.bookclub_components}>
-                
-            <h1 >{club?.name}</h1>
-            <h5>{`Created by ${club?.owner.first_name} ${club?.owner.last_name} on ${formatDate(club?.created_at)}`}</h5>
             
-            <img src={club?.avatar_url ? club?.avatar_url : "/src_images/placeholder_bookclub_avatar.jpeg"} className={styles.bookclub_img}/>
-            <p>{club?.description}</p>
-            <div className={styles.bookclub_buttons}>
-                <Button variant="primary" onClick={handleJoinShow}>Join</Button>
-                <Button variant="primary" onClick={handleLeaveShow}>Leave</Button>
+            <div className={styles.bookclub_header}>    
+            <h1 className={styles.club_name}>{club?.name}</h1>
+            <h5 className={styles.club_owner}>{`Created by ${club?.owner.first_name} ${club?.owner.last_name} on ${formatDate(club?.created_at)}`}</h5>
             </div>
-            <div>
+            <div className={styles.club_info_section}>
+            <div className={styles.about_section}>
+                <h3 className={styles.about_section_title}>About</h3>
+                <p className={styles.about_section_text}>{club?.description}</p>
+                <div className={styles.bookclub_buttons}>
+                    <Button className={styles.bookclub_btn} onClick={handleJoinShow}>Join</Button>
+                    <Button className={styles.bookclub_btn} onClick={handleLeaveShow}>Leave</Button>
+                </div>
+            <div className={styles.error_component}>
                 {joinErrors && <p>{joinErrors}</p>}
                 {leaveErrors && <p>{leaveErrors}</p>}
             </div>
-            <Breadcrumb>
-                <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/bookclubs/${club?.id}/members` }}>Members</Breadcrumb.Item>
+            </div>
+            <img src={club?.avatar_url ? club?.avatar_url : "/src_images/placeholder_bookclub_avatar.jpeg"} className={styles.bookclub_img}/>
+            </div>
+            <div className={`${styles.bookclub_breadcrumb} breadcrumb_divider_custom`}>
+            <Breadcrumb
+            className={styles.breadcrumbs} >
+                <Breadcrumb.Item className={styles.breadcrumb_item} linkAs={Link} linkProps={{ to: `/bookclubs/${club?.id}/members` }}>Members</Breadcrumb.Item>
                 <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/bookclubs/${club?.id}/books` }}>
                     Books
                 </Breadcrumb.Item>
                 {club?.owner.id === loggedInUser?.id &&
                 <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/bookclubs/${club?.id}/edit` }}>Edit</Breadcrumb.Item>}
             </Breadcrumb>
+            </div>
             <JoinModal show={joinModalShow} onHide={handleJoinClose} />
             <LeaveModal show={leaveModalShow} onHide={handleLeaveClose} />
             <div className="lists_container">
@@ -219,26 +230,8 @@ function ClubProfile() {
                     </Routes>
                     <Outlet />
                 </ClubContext.Provider>
-                
-                {/* <div className={styles.members_list}>
-                    <h3>Members</h3>
-                    <ul className={styles.users_lists}>
-                        <NavLink to={`/userprofile/${club?.owner.id}`}>
-                            <li key='owner'>
-                                <LiaCrownSolid />
-                                {club?.owner.first_name} {club?.owner.last_name}
-                            </li>
-                        </NavLink>
-                        {club?.members.map((member, idx) => (
-                        <NavLink to={`/userprofile/${member.id}`}>
-                            <li key={idx}>
-                                {member.first_name} {member.last_name}
-                            </li>
-                        </NavLink> 
-                        ))}
-                    </ul>
-                </div> */}
-            </div>
+                    </div>
+                </div>
             </div>
         </body>
     )

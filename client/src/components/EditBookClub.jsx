@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 // local imports
 import ClubContext from './ClubContext';
 import { OutletContext } from './App';
+import styles from '../stylesheets/ClubProfile.module.css';
 
 
 function EditBookClub() {
@@ -96,10 +97,10 @@ function EditBookClub() {
 
     
     return (
-        <div>
-            <h3>Edit Book Club</h3>
-            {formErrors ? <div>{formErrors}</div> : null}
-            <Form onSubmit={formik.handleSubmit}>
+        <div className={styles.edit_form_component}>
+            <h3 className={styles.edit_title}>Edit Book Club</h3>
+            {formErrors ? <div className={styles.edit_form_errors}>{formErrors}</div> : null}
+            <Form onSubmit={formik.handleSubmit} className={styles.edit_form}>
                 <Row className="mb-3">
                     <Col md={6}>
                         <Form.Group controlId="name">
@@ -148,8 +149,8 @@ function EditBookClub() {
                     </Col>
                 </Row>
                 {formik.errors.atLeastOneField && <div>{formik.errors.atLeastOneField}</div>}
-                {formik.status && <div>{formik.status}</div>}
-                <Button type="submit">Submit</Button>
+                {formik.status && <div className={styles.edit_form_errors}>{formik.status}</div>}
+                <Button className={styles.edit_form_btn} type="submit">Submit</Button>
             </Form>
         </div>
     )
