@@ -57,7 +57,6 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser })
                 if (!r.ok) {
                     r.json().then(({errors}) => {
                     setFormErrors(errors)
-                    console.log("inside function", formErrors)
                 }); }
                 else {
                     r.json().then((updatedUser) => {

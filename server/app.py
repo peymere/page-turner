@@ -109,12 +109,13 @@ class BookClubById(Resource):
             return make_response(book_club.to_dict(rules=('members',)), 200)
         
     def patch(self, id):
-        if id != session.get('user_id'):
+        owner_id = session.get('user_id')
+        if not owner_id:
             return make_response({'error': 'Unauthorized'}, 401)
         else:
             book_club = BookClub.query.filter_by(id=id).first()
-            if not book_club:
-                return make_response({'error': 'Book club not found'}, 404)
+            if not book_club or book_club.owner_id != owner_id:
+                return make_response({'error': 'Book club not found or unauthorized'}, 404)
             params = request.json
             try:
                 for attr in params:
