@@ -24,16 +24,22 @@ function Signup() {
     };
 
     const signupSchema = Yup.object({
-            email: Yup.string().email('Invalid Email Address').required('Email Required'),
+            email: Yup.string()
+            .email('Invalid Email Address')
+            .trim("Name cannot include leading or trailing spaces or tabs")
+            .required('Email Required'),
             username: Yup.string()
                 .min(3, "Username must be between 3 and 15 characters")
                 .max(15, "Username must be between 3 and 15 characters")
+                .trim("Name cannot include leading or trailing spaces or tabs")
                 .required('Username Required'),
             firstName: Yup.string()
                 .min(2, "First Name must be at least 2 characters")
+                .trim("Name cannot include leading or trailing spaces or tabs")
                 .required('First Name Required'),
             lastName: Yup.string()
                 .min(2, "Last name must be at least 2 characters")
+                .trim("Name cannot include leading or trailing spaces or tabs")
                 .required('Last name Required'),
         }
     )

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -57,7 +57,6 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser })
                 if (!r.ok) {
                     r.json().then(({errors}) => {
                     setFormErrors(errors)
-                    console.log("inside function", formErrors)
                 }); }
                 else {
                     r.json().then((updatedUser) => {

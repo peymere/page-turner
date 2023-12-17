@@ -59,7 +59,6 @@ function Login() {
         },
         validationSchema: combinedSchema,
         onSubmit: (values, {resetForm}) => {
-            console.log(values)
             fetch('/login', {
                 method: 'POST',
                 headers: {
