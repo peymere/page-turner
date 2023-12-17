@@ -12,8 +12,7 @@
 
     @media (min-width: 992px) {
         h2 {
-            font-family: 'Unbounded', sans-serif !important;
-            font-size: 26px !important;
+            font-size: 29px !important;
         }
     }
 
@@ -39,7 +38,7 @@
         border-style: solid;
         border-radius: 3px;
         background-color: #392E26;
-        font-family: 'Questrial', sans-serif;
+        font-family: 'Poppins', sans-serif;
         font-size: 16px;
         width: 140%;
         margin-left: -15px;
@@ -72,19 +71,28 @@
     }
 
     h1 {
-        font-family: 'Unbounded', sans-serif;
+        font-family: 'Cenios', sans-serif;
         font-weight: 700;
-        letter-spacing: 1px;
+        /* font-variant: small-caps; */
+        letter-spacing: 2px;
         text-align: center;
         margin-bottom: 10px;
         color: #F0DAAE;
         font-size: 38px !important;
     }
+
+    h2 {
+        color: #F0DAAE;
+        font-weight: 400;
+        font-family: 'Newsreader', serif;
+        font-style: italic;
+        letter-spacing: 2.5px;
+    }
     
 
     @media (max-width:991px) {
         h2 {
-            font-family: 'Unbounded', sans-serif !important;
+            
             font-size: 18px !important;
         }
 
@@ -117,16 +125,10 @@
         justify-content: center;
     }
 
-    h2 {
-        color: #F0DAAE;
-        font-weight: 700;
-        font-family: 'Playfair Display', serif;
-        font-style: italic;
-        letter-spacing: 1px;
-    }
+    
 
     .formGroup {
-        font-family: 'Questrial', sans-serif;
+        font-family: 'Poppins', sans-serif;
         text-align: left;
         width: 75%;
         left: 10p;
@@ -135,25 +137,40 @@
         padding: 15px 0px 0px 10px;
     }
 
-    Button.custom-btn {
-        font-family: 'Questrial', sans-serif !important;
+    Button.custom_btn {
+        font-family: 'Poppins', sans-serif;
         font-variant: normal;
         font-size: 20px;
         text-align: center;
         font-weight: 700;
         background-color: #584446 !important;
         color: #D8C3A5 !important;
+        margin-top: .5rem;
+        margin-bottom: 15px;
+        width: 200px;
+        border: #584446;
+    }
+
+    Button.custom_btn:hover {
+        background-color: #D8C3A5 !important;
+        color: #584446 !important;
+        border: #584446;
     }
 
     body p {
         font-size: 18px;
         color: #B6A593;
-        font-family: 'Questrial', sans-serif;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login_link:hover {
+        font-style: italic;
+        font-weight: 700;
     }
 
     div.error {
         color: #F0DAAE;
-        font-family: 'Questrial', sans-serif;
+        font-family: 'Poppins', sans-serif;
         font-size: 12px;
         margin-bottom: 12px;
     }

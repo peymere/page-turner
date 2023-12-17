@@ -36,9 +36,9 @@ function NavBar({loggedInUser, setLoggedInUser}) {
                         src="/reading-book-logo.png"
                         width="30"
                         height="30"
-                        // className="d-inline-block align-top"
+                        className="d-inline-block align-top"
                         />{' '}
-                        PageTurner
+                        <span>PageTurner</span>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end align-items-right">

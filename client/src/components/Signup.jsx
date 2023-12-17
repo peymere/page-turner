@@ -298,24 +298,13 @@ function Signup() {
                 variant="primary" 
                 type="submit" 
                 disabled={!formik.isValid}
-                style={{
-                fontFamily: 'Questrial, sans-serif',
-                fontVariant: 'normal',
-                fontSize: '20px',
-                textAlign: 'center',
-                fontWeight: 700,
-                backgroundColor: '#584446',
-                color: '#D8C3A5',
-                marginTop: '.5rem',
-                marginBottom: '15px',
-                width: '200px'
-                }} >
+                className={styles.custom_btn} >
                     Submit
                 </Button>
                 </Form>
                 <p>
                 Already have an account?{' '}
-                <NavLink to='/login' style={{ color: '#929984' }}>
+                <NavLink to='/login' className={styles.login_link} style={{ color: '#929984' }}>
                     Login
                 </NavLink>
                 </p>
