@@ -12,46 +12,42 @@ function ClubMembers() {
 
     return (
         <div className={styles.members_list}>
-        <h3>Members</h3>
-        <ul className={styles.users_lists}>
-            <NavLink to={`/userprofile/${club?.owner.id}`}>
-            <li key='owner'>
-                <LiaCrownSolid />
-                {club?.owner.first_name} {club?.owner.last_name}
-            </li>
-            </NavLink>
-            {club?.members.map((member, idx) => (
-            <NavLink to={`/userprofile/${member.id}`}>
-                <li key={idx}>
-                {member.first_name} {member.last_name}
-                </li>
-            </NavLink> 
-            ))}
-        </ul>
-        <Card style={{ width: '18rem' }}>
-            <Card.Img 
-                variant="top" 
-                src={club?.owner.profile_pic ? club?.owner.profile_pic : "/src_images/placeholder-prof-pic.png"} 
-                    alt="profile pic" 
-            />
-            <Card.Body>
-                <Card.Title>
-                    <LiaCrownSolid /> {' '}
-                    @{club?.owner.username}
-                </Card.Title>
-                
-            </Card.Body>
-        </Card>
-        <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-                </Card.Text>
-            </Card.Body>
-        </Card>
+            <h3 className={styles.members_header} >Members</h3>
+            <div className={styles.member_card_container}>
+                <Card style={{ width: '14rem' }}>
+                    <Card.Img 
+                        variant="top" 
+                        src={club?.owner.profile_pic ? club?.owner.profile_pic : "/src_images/placeholder-prof-pic.png"} 
+                        alt="profile pic" 
+                        className={styles.member_img}
+                    />
+                    <Card.Body className={styles.member_card_body}>
+                        <Card.Title>
+                            <LiaCrownSolid /> {' '}
+                            <NavLink to={`/userprofile/${club?.owner.id}`} >
+                                @{club?.owner.username}
+                            </NavLink>
+                        </Card.Title>
+                    </Card.Body>
+                </Card>
+                {club?.members.map((member, idx) => (
+                    <Card style={{ width: '14rem' }}>
+                        <Card.Img 
+                        variant="top" 
+                        src={member.profile_pic ? member.profile_pic : "/src_images/placeholder-prof-pic.png"} 
+                        alt="profile pic"
+                        className={styles.member_img}  
+                        />
+                        <Card.Body className={styles.member_card_body} >
+                            <Card.Title>
+                            <NavLink to={`/userprofile/${member.id}`}>
+                                @{member.username}
+                            </NavLink>
+                            </Card.Title>
+                        </Card.Body>
+                    </Card>
+                ))}
+            </div>
         </div>
     );
 }

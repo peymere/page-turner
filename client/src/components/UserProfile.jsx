@@ -114,17 +114,6 @@ const UserProfile = () => {
             </Modal>
         )
     }
-    // console.log('User Object:', user)
-    // console.log("user's bookclubs:", user?.book_clubs_owned)
-
-//     const get_book_club = (book_clubs) => {
-//     if (book_clubs?.length > 0) {
-//         for (const book_club of book_clubs) {
-//             console.log(book_club.name);
-//         }
-//     }
-// }
-    // get_book_club(user?.book_clubs)
 
     if (!user) {
         <h1> User not found </h1>
