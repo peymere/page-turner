@@ -1,0 +1,191 @@
+.explore_more_container {
+
+
+/* Base */
+/* * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+} */
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-family: 'newsreader', sans-serif;
+    font-size: 20px;
+    line-height: 26px;
+    padding-right: 20px;
+    color: #460000;
+}
+
+ul li {
+    margin: 0 0 24px;
+    list-style: none;
+}
+
+/* The Arrow */
+.the_arrow {
+    width: 1px;
+    transition: all 0.2s;
+}
+
+.the_arrow.left {
+    position: absolute;
+    top: 40%;
+    left: 0;
+}
+
+.the_arrow.left .shaft {
+    width: 0;
+    background-color: #c7bbc9;
+}
+
+.the_arrow.left .shaft:before,
+.the_arrow.left .shaft:after {
+    width: 0;
+    background-color: #c7bbc9;
+}
+
+.the_arrow.left .shaft:before {
+    transform: rotate(0);
+}
+
+.the_arrow.left .shaft:after {
+    transform: rotate(0);
+}
+
+.the_arrow.right {
+    top: 3px;
+}
+
+.the_arrow.right .shaft {
+    width: 1px;
+    transition-delay: 0.2s;
+}
+
+.the_arrow.right .shaft:before,
+.the_arrow.right .shaft:after {
+    width: 8px;
+    transition-delay: 0.3s;
+    transition: all 0.5s;
+}
+
+.the_arrow.right .shaft:before {
+    transform: rotate(40deg);
+}
+
+.the_arrow.right .shaft:after {
+    transform: rotate(-40deg);
+}
+
+.the_arrow .shaft {
+    background-color: #c7bbc9;
+    display: block;
+    height: 1px;
+    position: relative;
+    transition: all 0.2s;
+    transition-delay: 0;
+    will-change: transform;
+}
+
+.the_arrow .shaft:before,
+.the_arrow .shaft:after {
+    background-color: #c7bbc9;
+    content: '';
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: all 0.2s;
+    transition-delay: 0;
+}
+
+.the_arrow .shaft:before {
+    transform-origin: top right;
+}
+
+.the_arrow .shaft:after {
+    transform-origin: bottom right;
+}
+
+/* Animated Arrow Button */
+.animated_arrow {
+    display: inline-block;
+    color: #c7bbc9;
+    font-size: 1.25em;
+    font-style: italic;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.animated_arrow:hover {
+    color: #c1d6da
+}
+
+.animated_arrow:hover .the_arrow.left .shaft {
+    width: 64px;
+    transition-delay: 0.1s;
+    background-color: #c1d6da
+}
+
+.animated_arrow:hover .the_arrow.left .shaft:before,
+.animated_arrow:hover .the_arrow.left .shaft:after {
+    width: 8px;
+    transition-delay: 0.1s;
+    background-color: #c1d6da
+}
+
+.animated_arrow:hover .the_arrow.left .shaft:before {
+    transform: rotate(40deg);
+}
+
+.animated_arrow:hover .the_arrow.left .shaft:after {
+    transform: rotate(-40deg);
+}
+
+.animated_arrow:hover .main {
+    transform: translateX(calc(1px + 16px));
+    transform: translateX(calc(64px + 16px));
+}
+
+.animated_arrow:hover .main .the_arrow.right .shaft {
+    width: 0;
+    transform: translateX(200%);
+    transition-delay: 0;
+}
+
+.animated_arrow:hover .main .the_arrow.right .shaft:before,
+.animated_arrow:hover .main .the_arrow.right .shaft:after {
+    width: 0;
+    transition-delay: 0;
+    transition: all 0.1s;
+}
+
+.animated_arrow:hover .main .the_arrow.right .shaft:before {
+    transform: rotate(0);
+}
+
+.animated_arrow:hover .main .the_arrow.right .shaft:after {
+    transform: rotate(0);
+}
+
+.animated_arrow .main {
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.animated_arrow .main .text {
+    margin: 0 16px 0 0;
+    line-height: 1;
+}
+
+/* .animated_arrow .main .the_arrow {
+    position: relative;
+} */
+
+} 
