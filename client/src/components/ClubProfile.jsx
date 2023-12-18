@@ -10,6 +10,8 @@ import { OutletContext } from './App'
 import ClubMembers from "./ClubMembers";
 import styles from '../stylesheets/ClubProfile.module.css'
 import ClubContext from "./ClubContext";
+import ExploreMore from "./ExploreMore";
+
 
 function ClubProfile() {
     const { id } = useParams();
@@ -213,6 +215,7 @@ function ClubProfile() {
             <div className={`${styles.bookclub_breadcrumb} breadcrumb_divider_custom`}>
             <Breadcrumb
             className={styles.breadcrumbs} >
+                <Breadcrumb.Item className={styles.breadcrumb_item} linkAs={Link} linkProps={{ to: `/bookclubs/${club?.id}` }}>Main</Breadcrumb.Item>
                 <Breadcrumb.Item className={styles.breadcrumb_item} linkAs={Link} linkProps={{ to: `/bookclubs/${club?.id}/members` }}>Members</Breadcrumb.Item>
                 <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/bookclubs/${club?.id}/books` }}>
                     Books
@@ -223,15 +226,16 @@ function ClubProfile() {
             </div>
             <JoinModal show={joinModalShow} onHide={handleJoinClose} />
             <LeaveModal show={leaveModalShow} onHide={handleLeaveClose} />
-            <div className="lists_container">
-                <ClubContext.Provider value={club}>
-                    <Routes>
-                        <Route path="/bookclubs/:id/members" element={<ClubMembers />} />
-                        {/* Other routes go here */}
-                    </Routes>
-                    <Outlet />
-                </ClubContext.Provider>
+                    <div className="lists_container">
+                        <ClubContext.Provider value={club}>
+                            <Routes>
+                                <Route path="/bookclubs/:id/members" element={<ClubMembers />} />
+                                {/* Other routes go here */}
+                            </Routes>
+                            <Outlet />
+                        </ClubContext.Provider>
                     </div>
+                    <ExploreMore />
                 </div>
             </div>
         </body>
