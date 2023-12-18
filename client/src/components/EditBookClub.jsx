@@ -68,7 +68,7 @@ function EditBookClub() {
             }
 
             if (!isNewValues) {
-                setStatus('Must provide a new value to update the club');
+                setStatus('Must provide changes to update the club');
                 return;
             }
             fetch(`/bookclubs/${id}`, {
@@ -101,14 +101,16 @@ function EditBookClub() {
             <h3 className={styles.edit_title}>Edit Book Club</h3>
             {formErrors ? <div className={styles.edit_form_errors}>{formErrors}</div> : null}
             <Form onSubmit={formik.handleSubmit} className={styles.edit_form}>
+                <div className={styles.edit_form_inputs}>
                 <Row className="mb-3">
                     <Col md={6}>
-                        <Form.Group controlId="name">
-                            <Form.Label>Book Club Name</Form.Label>
+                        <Form.Group controlId="name" className={styles.flex_container}>
+                            <Form.Label className={styles.edit_form_label}>Book Club Name</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="name"
                                 placeholder="Enter a new club name"
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
                                 onChange={formik.handleChange}
                                 value={formik.values.name}
                             />
@@ -118,12 +120,13 @@ function EditBookClub() {
                         </Form.Group>
                     </Col>
                     <Col md={6}>
-                        <Form.Group controlId="avatar_url">
-                            <Form.Label>Image URL</Form.Label>
+                        <Form.Group controlId="avatar_url" className={styles.flex_container}>
+                            <Form.Label className={styles.edit_form_label}>Image URL</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="avatar_url"
                                 placeholder="Enter a new image URL"
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
                                 onChange={formik.handleChange}
                                 value={formik.values.avatar_url}
                             />
@@ -132,13 +135,16 @@ function EditBookClub() {
                             ) : null}
                         </Form.Group>
                     </Col>
-                    <Col md={6}>
-                        <Form.Group controlId="description">
-                            <Form.Label>Description</Form.Label>
+                    <Col className={styles.desc_col}>
+                        <div>
+                        <Form.Group controlId="description" className={styles.full_width}>
+                            <Form.Label className={styles.edit_form_label}>Description</Form.Label>
                             <Form.Control
-                                type="text"
+                                as="textarea"
                                 name="description"
-                                placeholder="Enter description"
+                                rows={3}
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
+                                placeholder="Enter your club's description"
                                 onChange={formik.handleChange}
                                 value={formik.values.description}
                             />
@@ -146,8 +152,10 @@ function EditBookClub() {
                                 <div>{formik.errors.description}</div>
                             ) : null}
                         </Form.Group>
+                        </div>
                     </Col>
                 </Row>
+                </div>
                 {formik.errors.atLeastOneField && <div>{formik.errors.atLeastOneField}</div>}
                 {formik.status && <div className={styles.edit_form_errors}>{formik.status}</div>}
                 <Button className={styles.edit_form_btn} type="submit">Submit</Button>
