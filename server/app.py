@@ -57,10 +57,7 @@ class UserById(Resource):
             params = request.json
             try:
                 for attr in params:
-                    if (
-                        (attr in ['email', 'username', 'first_name', 'last_name', 'password_hash'] and
-                        (params[attr] is None or params[attr] == ''))
-                    ):
+                    if params[attr] is None or params[attr] == '':
                         continue
 
                     if hasattr(user, attr) and not isinstance(getattr(user, attr), db.Model):
