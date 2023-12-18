@@ -57,8 +57,11 @@ class UserById(Resource):
             params = request.json
             try:
                 for attr in params:
-                    setattr(user, attr, params[attr])
-                    user.updated_at = datetime.utcnow()
+                    if hasattr(user, attr) and not isinstance(getattr(user, attr), db.Model):
+                        setattr(user, attr, params[attr])
+                        user.updated_at = datetime.utcnow()
+                else:
+                    return make_response({'error': f'Invalid attribute: {attr}'}, 400)
             except ValueError as v_error:
                 return make_response({'errors': str(v_error)}, 422)
             except Exception as e:

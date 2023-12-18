@@ -64,6 +64,8 @@ function ClubProfile() {
         return new Date(dateString).toLocaleDateString(undefined, options);
     }
 
+    console.log(club)
+
     // Join Club
     const handleJoinClub = () => {
         setJoinModalShow(false)
