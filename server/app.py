@@ -57,19 +57,23 @@ class UserById(Resource):
             params = request.json
             try:
                 for attr in params:
+                    if (
+                        (attr in ['email', 'username', 'first_name', 'last_name', 'password_hash'] and
+                        (params[attr] is None or params[attr] == ''))
+                    ):
+                        continue
+
                     if hasattr(user, attr) and not isinstance(getattr(user, attr), db.Model):
                         setattr(user, attr, params[attr])
                         user.updated_at = datetime.utcnow()
-                else:
-                    return make_response({'error': f'Invalid attribute: {attr}'}, 400)
+
             except ValueError as v_error:
                 return make_response({'errors': str(v_error)}, 422)
             except Exception as e:
                 print(f"Error updating user: {e}")
                 return make_response({'errors': 'Invalid request'}, 500)    
             db.session.commit()
-
-        return make_response(user.to_dict(), 200)
+            return make_response(user.to_dict(), 200)
     
     def delete(self, id):
         if id != session.get('user_id'):

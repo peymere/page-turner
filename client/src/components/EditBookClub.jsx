@@ -68,7 +68,7 @@ function EditBookClub() {
             }
 
             if (!isNewValues) {
-                setStatus('Must provide a new value to update the club');
+                setStatus('Must provide changes to update the club');
                 return;
             }
             fetch(`/bookclubs/${id}`, {

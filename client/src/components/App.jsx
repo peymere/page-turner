@@ -10,7 +10,7 @@ export const OutletContext = createContext();
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null)
-  console.log(loggedInUser)
+  // console.log(loggedInUser)
   const [showAlert, setShowAlert] = useState(false);
   const [bookClubs, setBookClubs] = useState(null)
   
@@ -19,7 +19,7 @@ function App() {
     .then((resp) => {
       if (resp.ok) {
         resp.json().then((user) => setLoggedInUser(user))
-        console.log(loggedInUser)
+        // console.log(loggedInUser)
       } else {
         // handle what should happen if not logged in
         console.log('error')

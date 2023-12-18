@@ -35,6 +35,16 @@ class User(db.Model, SerializerMixin):
     # validation rules
     @validates('first_name', 'last_name')
     def validate_name(self, key, new_name):
+        
+        current_value = getattr(self, key)
+
+        if new_name == None:
+            return current_value
+
+        
+        if current_value == new_name:
+            return new_name
+
         if len(new_name) < 2:
             raise ValueError(f"{key} must be at least 2 characters")
         if not new_name:
@@ -43,6 +53,15 @@ class User(db.Model, SerializerMixin):
     
     @validates('username')
     def validate_username(self, key, new_username):
+
+        current_value = getattr(self, key)
+
+        if new_username == None:
+            return current_value
+
+        if current_value == new_username:
+            return new_username
+
         if 3 > len(new_username) > 15 :
             raise ValueError(f"{key} must be between 3 and 15 characters")
         if not new_username:
@@ -51,6 +70,13 @@ class User(db.Model, SerializerMixin):
 
     @validates('password_hash')
     def validate_password(self, key, new_password):
+        current_value = getattr(self, key)
+
+        if new_password == None:
+            return current_value
+
+        if current_value == new_password:
+            return new_password
         if 8 > len(new_password) > 20:
             raise ValueError(f"{key} must be between 8 and 20 characters")
         if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]', new_password):
@@ -61,6 +87,13 @@ class User(db.Model, SerializerMixin):
     
     @validates('email')
     def validate_email(self, key, new_email):
+        current_value = getattr(self, key)
+
+        if new_email == None:
+            return current_value
+
+        if current_value == new_email:
+            return new_email
         emails = [u.email for u in User.query.all()]
         if new_email in emails:
             raise ValueError(f"{key} is already in use")
