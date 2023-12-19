@@ -60,7 +60,7 @@ class UserById(Resource):
                     if params[attr] is None or params[attr] == '':
                         continue
 
-                    if hasattr(user, attr) and not isinstance(getattr(user, attr), db.Model):
+                    else:
                         setattr(user, attr, params[attr])
                         user.updated_at = datetime.utcnow()
 
@@ -237,9 +237,10 @@ def index():
 
 @app.before_request
 def check_logged_id():
-    # ipdb.set_trace()
-    if request.endpoint in ['create_book_club'] and not session.get('user_id'):
-        return make_response({'error': 'Unauthorized'}, 401)
+    
+    if not session.get('user_id'):
+        if request.endpoint == 'bookclubs' and request.method == 'POST':
+            return make_response({'error': 'Unauthorized'}, 401)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

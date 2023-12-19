@@ -95,6 +95,7 @@ function ClubProfile() {
                     r.json().then((bookClubUser) => {
                         console.log("Book Club User created successfully", bookClubUser)
                         setJoinErrors(null)
+
                     })
                 } else {
                     r.json().then((err) => {
@@ -227,7 +228,7 @@ function ClubProfile() {
             <JoinModal show={joinModalShow} onHide={handleJoinClose} />
             <LeaveModal show={leaveModalShow} onHide={handleLeaveClose} />
                     <div className="lists_container">
-                        <ClubContext.Provider value={club}>
+                        <ClubContext.Provider value={{club, setClub}}>
                             <Routes>
                                 <Route path="/bookclubs/:id/members" element={<ClubMembers />} />
                                 {/* Other routes go here */}

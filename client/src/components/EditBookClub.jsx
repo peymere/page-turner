@@ -15,13 +15,13 @@ import styles from '../stylesheets/ClubProfile.module.css';
 
 function EditBookClub() {
     const {id} = useParams();
-    const club = useContext(ClubContext);
+    const {club, setClub} = useContext(ClubContext);
     const { loggedInUser } = useContext(OutletContext)
     const [formErrors, setFormErrors] = useState(null);
     const [editedClub, setEditedClub] = useState(null);
     const navigate = useNavigate();
 
-    console.log(club)
+    
 
     // Edit Club Schema
     const editClubSchema = Yup.object().shape({
@@ -85,6 +85,7 @@ function EditBookClub() {
                 } else {
                     resetForm()
                     r.json().then((updatedClub) => {
+                        setClub(updatedClub);
                         setEditedClub(updatedClub);
                         setFormErrors(null);
                         navigate(`/bookclubs/${updatedClub.id}`)
