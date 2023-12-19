@@ -191,3 +191,14 @@ class BookClubUser(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<BookClubUser #{self.id}: BookClubId={self.book_club_id}, UserID={self.user_id}>"
+    
+class Book(db.Model, SerializerMixin):
+    __tablename__ = 'books'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    author = db.Column(db.String, nullable=False)
+    cover_i = db.Column(db.Integer)
+
+    
+
