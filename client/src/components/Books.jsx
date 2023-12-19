@@ -29,18 +29,29 @@ function Books() {
     // console.log('Books:', books)
 
     return (
-        <div className={styles.book_component}>
-        {books.map((book, idx) => (
-            
-                <div key={idx}>
-                    <h1>{book.title}</h1>
-                    <h2>{book.author_name[0]}</h2>
-                    <img src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`} alt="book cover" />
-                </div>
-        )
-
-        
-        )}
+        <div className={styles.books_component}>
+            <h1 className={styles.books_header}>Books</h1>
+            <div className={styles.books_list} >
+            <div className={styles.books_container}>
+            {books.map((book, idx) => (
+                <Card style={{ width: '14rem' }} key={idx} className={styles.book_card}>
+                    <Card.Img 
+                    className={styles.book_img}
+                    variant="top" 
+                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`} 
+                    />
+                    <Card.Body className={styles.book_card_body}>
+                        <Card.Title className={styles.book_card_title}>{book.title}</Card.Title>
+                        <Card.Text className={styles.book_card_author}>
+                            {book.author_name[0]}
+                        </Card.Text>
+                        {/* <NavLink to={`/books/${book.key.slice(7)}`} className={styles.book_link}>See More</NavLink> */}
+                    </Card.Body>
+                </Card>
+                ))
+            }
+            </div>
+            </div>
         </div>
     )
 }

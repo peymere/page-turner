@@ -9,7 +9,8 @@ import styles from '../stylesheets/ClubProfile.module.css';
 import ClubContext from './ClubContext';
 
 function ClubMembers() {
-    const club = useContext(ClubContext);
+    const {club, setClub} = useContext(ClubContext);
+    console.log("club", club)
 
     return (
         <div className={styles.members_component}>
