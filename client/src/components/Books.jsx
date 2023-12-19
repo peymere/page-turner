@@ -47,7 +47,7 @@ function Books() {
                     <Card.Body className={styles.book_card_body}>
                         <Card.Title className={styles.book_card_title}>{book.title}</Card.Title>
                         <Card.Text className={styles.book_card_author}>
-                            {book.author_name[0]}
+                            {book.author_name}
                         </Card.Text>
                         {/* <NavLink to={`/books/${book.key.slice(7)}`} className={styles.book_link}>See More</NavLink> */}
                     </Card.Body>
