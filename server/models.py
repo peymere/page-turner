@@ -213,6 +213,9 @@ class Book(db.Model, SerializerMixin):
     # proxy for book_clubs_books.book_club
     book_clubs = association_proxy('book_clubs_books', 'book_club')
 
+    # serialize rules
+    serialize_rules = ('-users_books', '-book_clubs_books', '-users', '-book_clubs' )
+
 
     def __repr__(self):
         return f"<Book #{self.id}: {self.title} by {self.author_name}>"
@@ -230,6 +233,7 @@ class UserBook(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='users_books')
 
     # serialize rules
+    serialize_rules = ('-user.users_books', '-book.users_books', '-user.book_clubs_joined', '-user.book_clubs_owned', '-user.created_at', '-user.about_me', '-user.updated_at', '-book.book_clubs_books')
 
     def __repr__(self):
         return f"<UserBook #{self.id}: UserID={self.user_id}, BookID={self.book_id}, Status={self.book_status}>"
@@ -249,6 +253,7 @@ class BookClubBook(db.Model, SerializerMixin):
 
 
     # serialize rules
+    serialize_rules = ('-book_club.book_clubs_books', '-book.book_clubs_books', '-book_club.users_joined', '-book_club.owner', '-book_club.created_at', '-book_club.updated_at', '-book_club.description', '-book_club.avatar_url', '-book_club.members')
 
     def __repr__(self):
         return f"<BookClubBook #{self.id}: BookClubID={self.book_club_id}, BookID={self.book_id}>"
