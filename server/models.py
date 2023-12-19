@@ -6,7 +6,6 @@ import re
 # local imports
 from config import db, bcrypt
 
-
 # Models
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -26,8 +25,11 @@ class User(db.Model, SerializerMixin):
     # relationships
     book_clubs_owned = db.relationship('BookClub', back_populates='owner', cascade='all, delete-orphan')
     book_clubs_joined = db.relationship('BookClubUser', back_populates='user', cascade='all, delete-orphan', lazy='dynamic')
+    users_books = db.relationship('UserBook', back_populates='user', cascade='all, delete-orphan')
     # proxy for book_clubs_joined.book_club
     book_clubs = association_proxy('book_clubs_joined', 'book_club')
+    # proxy for users_books.book
+    books = association_proxy('users_books', 'book')
 
     # serialize rules
     serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner', '-updated_at', '-book_clubs_joined.members', '-book_clubs_owned.members', )
@@ -62,7 +64,7 @@ class User(db.Model, SerializerMixin):
         if current_value == new_username:
             return new_username
 
-        if 3 > len(new_username) > 15 :
+        if not(3 <= len(new_username) <= 15) :
             raise ValueError(f"{key} must be between 3 and 15 characters")
         if not new_username:
             raise ValueError(f"{key} is required")
@@ -77,7 +79,7 @@ class User(db.Model, SerializerMixin):
 
         if current_value == new_password:
             return new_password
-        if 8 > len(new_password) > 20:
+        if not (8 <= len(new_password) <= 20):
             raise ValueError(f"{key} must be between 8 and 20 characters")
         if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]', new_password):
             raise ValueError(f"{key} must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number")
@@ -142,8 +144,7 @@ class BookClub(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String(300))
     avatar_url = db.Column(db.String)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp(
-    ))
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(
     ), onupdate=db.func.current_timestamp())
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -151,8 +152,11 @@ class BookClub(db.Model, SerializerMixin):
     # relationships
     owner = db.relationship('User', back_populates='book_clubs_owned')
     users_joined = db.relationship('BookClubUser', back_populates='book_club', cascade='all, delete-orphan', lazy='dynamic')
+    book_clubs_books = db.relationship('BookClubBook', back_populates='book_club', cascade='all, delete-orphan')
     # proxy for users_joined.user
     members = association_proxy('users_joined', 'user')
+    # proxy for book_clubs_books.book
+    books = association_proxy('book_clubs_books', 'book')
 
     # serialize rules
     serialize_rules = ('-owner.book_clubs_owned', '-users_joined', '-owner.book_clubs_joined', '-owner.created_at', '-members.book_clubs_joined', '-updated_at', '-members.book_clubs_owned', '-members.about_me', '-members.email', '-members.created_at')
@@ -197,8 +201,57 @@ class Book(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-    author = db.Column(db.String, nullable=False)
+    author_name = db.Column(db.String, nullable=False)
     cover_i = db.Column(db.Integer)
+    key = db.Column(db.String, nullable=False)
 
+    # relationships
+    users_books = db.relationship('UserBook', back_populates='book', cascade='all, delete-orphan')
+    book_clubs_books = db.relationship('BookClubBook', back_populates='book', cascade='all, delete-orphan')
+    # proxy for users_books.user
+    users = association_proxy('users_books', 'user')
+    # proxy for book_clubs_books.book_club
+    book_clubs = association_proxy('book_clubs_books', 'book_club')
+
+
+    def __repr__(self):
+        return f"<Book #{self.id}: {self.title} by {self.author_name}>"
     
+class UserBook(db.Model, SerializerMixin):
+    __tablename__ = 'user_books'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True, nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    book_status = db.Column(db.Enum('read', 'reading', 'want to read'), nullable=False)
+
+    # relationships
+    book = db.relationship('Book', back_populates='users_books')
+    user = db.relationship('User', back_populates='users_books')
+
+    # serialize rules
+
+    def __repr__(self):
+        return f"<UserBook #{self.id}: UserID={self.user_id}, BookID={self.book_id}, Status={self.book_status}>"
+    
+class BookClubBook(db.Model, SerializerMixin):
+    __tablename__ = 'book_clubs_books'
+
+    id = db.Column(db.Integer, primary_key=True)
+    book_club_id = db.Column(db.Integer, db.ForeignKey('book_clubs.id'), index=True, nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    added_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    currently_reading = db.Column(db.Boolean, default=True)
+
+    # relationships
+    book = db.relationship('Book', back_populates='book_clubs_books')
+    book_club = db.relationship('BookClub', back_populates='book_clubs_books')
+
+
+    # serialize rules
+
+    def __repr__(self):
+        return f"<BookClubBook #{self.id}: BookClubID={self.book_club_id}, BookID={self.book_id}>"
+
+
 

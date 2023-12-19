@@ -8,9 +8,10 @@ import styles from '../stylesheets/Books.module.css'
 
 function Books() {
     const [books, setBooks] = useState([])
+    
 
     useEffect(() => {
-        fetch('https://openlibrary.org/search.json?q=first_publish_year%3A[2020+TO+2023]&language%3Aeng&subject=fiction&limit=20&page=2&fields=title+author_name+cover_i')
+        fetch('https://openlibrary.org/search.json?q=first_publish_year%3A[2020+TO+2023]&language%3Aeng&subject=fiction&limit=20&page=2&fields=title+author_name+cover_i+first_publish_year+key')
         .then((resp) => {
             if (resp.ok) {
                 return resp.json()
@@ -19,14 +20,17 @@ function Books() {
             }
             })
         .then((bookData) => {
-            setBooks(bookData.docs)
+            const updatedBooks = bookData.docs.map((book) => {
+                const authorName = book.author_name ? book.author_name.join(', ') : 'Unknown'
+                return {...book, author_name: authorName}
+            } )
+            setBooks(updatedBooks)
         })
         .catch((err) => {
             console.log("Error getting books:", err);
         })
     }, [])
 
-    // console.log('Books:', books)
 
     return (
         <div className={styles.books_component}>
