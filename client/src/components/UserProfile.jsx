@@ -185,9 +185,11 @@ const UserProfile = () => {
             {editProfile ? (
             <div>
                 <EditProfile loggedInUser={loggedInUser} user={user} setUser={setUser} editedUser={editedUser} setEditedUser={setEditedUser} setEditProfile={setEditProfile}/>
-                <Button variant="secondary" size="sm" onClick={handleShow}>
+                <div className={styles.del_btn}> 
+                <Button  variant="secondary" size="sm" onClick={handleShow}>
                     Delete your account
                 </Button>
+                </div>
                 <MyModal
                     show={deleteModalShow}
                     onHide={() => setDeleteModalShow(false)}

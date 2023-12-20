@@ -156,13 +156,7 @@
         }
     }
 
-    .users_clubs {
-        list-style: none;
-    }
-
-
-    
-    .users_lists {
-        list-style: none;
+    .del_btn {
+        background-color: #9da092;
     }
 }
