@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
     books = association_proxy('users_books', 'book')
 
     # serialize rules
-    serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner', '-updated_at', '-book_clubs_joined.members', '-book_clubs_owned.members', )
+    serialize_rules=('-_password_hash', '-book_clubs_joined.user', '-book_clubs_owned.owner', '-book_clubs_owned.book_clubs_books' '-updated_at', '-book_clubs_joined.members', '-book_clubs_owned.members', )
 
     # validation rules
     @validates('first_name', 'last_name')

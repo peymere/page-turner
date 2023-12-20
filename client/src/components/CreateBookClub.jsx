@@ -11,7 +11,6 @@ function CreateBookClub() {
     const { id } = useParams();
     const navigate = useNavigate()
     const { loggedInUser, bookClubs } = useContext(OutletContext)
-    console.log(loggedInUser?.id)
 
     const formik = useFormik({
         initialValues: {

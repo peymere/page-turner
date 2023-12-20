@@ -159,6 +159,33 @@ function Books() {
             if (bookAlreadyInClub) {
                 console.log(`${selectedBook.title} is already in ${currentClub.name}'s list of books`)
             } else {
+                fetch('/bookclubsbooks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        selectedBook:{
+                            title: selectedBook.title,
+                            author_name: selectedBook.author_name,
+                            cover_i: selectedBook.cover_i,
+                            first_publish_year: selectedBook.first_publish_year,
+                            key: selectedBook.key
+                        },
+                        book_club_id: currentClub.id
+                        }),
+                    }).then((r) => {
+                        if (r.ok) {
+                            r.json().then((bookClubBook) => {
+                                console.log("Book added to book club", bookClubBook)
+                            })
+                        } else {
+                            r.json().then((err) => {
+                                console.log(err)
+                            })
+                        }})
+
+
                 handleClubClose()
                 setSelectedClub('')
                 console.log(`Adding ${selectedBook.title} to ${currentClub.name}`)
@@ -242,9 +269,7 @@ function Books() {
                         loggedInUser={loggedInUser}
                         handleAddBookToClub={handleAddBookToClub}
                         />
-                    </Card.Body>
-                    {/* {bookshelfModalShow, handleBookshelfClose, selectedShelfOption, setSelectedShelfOption, handleAddToBookShelf} */}
-                    {/* {clubModalShow, handleClubClose, selectedClub, setSelectedClub, loggedInUser, handleAddBookToClub} */}
+                    </Card.Body> 
                 </Card>
                 ))
             }
@@ -255,3 +280,7 @@ function Books() {
 }
 
 export default Books
+
+
+/* {bookshelfModalShow, handleBookshelfClose, selectedShelfOption, setSelectedShelfOption, handleAddToBookShelf} */
+/* {clubModalShow, handleClubClose, selectedClub, setSelectedClub, loggedInUser, handleAddBookToClub} */
