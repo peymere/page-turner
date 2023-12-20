@@ -6,7 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 
 // local imports
 import styles from '../stylesheets/ClubProfile.module.css';
-import ClubContext from './ClubContext';
+import ClubContext from './Contexts/ClubContext';
 
 function ClubMembers() {
     const {club, setClub} = useContext(ClubContext);

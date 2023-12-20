@@ -1,13 +1,17 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button, Modal, NavLink } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { LiaCrownSolid } from "react-icons/lia";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 // local imports
 import styles from '../stylesheets/UserProfile.module.css';
+import Bookshelf from './Bookshelf';
 import { OutletContext } from './App';
 import EditProfile from './EditProfile';
+import UserContext from './Contexts/UserContext';
 
 const UserProfile = () => {
     const { id } = useParams();
@@ -16,7 +20,7 @@ const UserProfile = () => {
     const [editProfile, setEditProfile] = useState(false);
     const [editedUser, setEditedUser] = useState(null);
     const [formErrors, setFormErrors] = useState([]);
-
+    const totalClubs = user?.book_clubs_owned.length + user?.book_clubs.length;
 
    
     const navigate = useNavigate();
@@ -82,7 +86,7 @@ const UserProfile = () => {
         navigate('/');
         setShowAlert(true);
     }
-
+    
     // Defining delete profile Modal component
     function MyModal(props) {
         return (
@@ -125,7 +129,7 @@ const UserProfile = () => {
         <div className={styles.profile_container}>
 
             <div className={styles.profile_components}>
-            <div >
+            <div className={styles.user_info_container}>
                 <img 
                     src={user.profile_pic ? user.profile_pic : "/src_images/placeholder-prof-pic.png"} 
                     alt="profile pic" 
@@ -134,6 +138,7 @@ const UserProfile = () => {
                 <h2>{`${user['first_name']}'s Profile`}</h2>
                 <h3>@{user.username}</h3>
                 <h6>Member since {formatDate(user.created_at)}</h6>
+                <p>{`${user.users_books.length} Books`} | {`${totalClubs} Clubs`}</p>
                 {loggedInUser && loggedInUser.id === user.id ? (
                     <div>
                     <Button onClick={handleEditProfileClick}>
@@ -149,6 +154,10 @@ const UserProfile = () => {
                     ( <div></div> )
                 }
             </div>
+            <div className={styles.user_bio_container}>
+                <h4>Bio</h4>
+                <p>{user.about_me}</p>
+            </div>
             {editProfile ? (
             <div>
                 <EditProfile loggedInUser={loggedInUser} user={user} setUser={setUser} editedUser={editedUser} setEditedUser={setEditedUser} setEditProfile={setEditProfile}/>
@@ -162,6 +171,16 @@ const UserProfile = () => {
             </div> ) : 
             ( <div></div> )
         }
+            <div className="route_container">
+                <UserContext.Provider value={{ users_books: user.users_books, user: user }}>
+                    <Routes>
+                        <Route path="/users/:id/bookshelf" 
+                        element={<Bookshelf />} />
+                        {/* Other routes go here */}
+                    </Routes>
+                    <Outlet />
+                </UserContext.Provider>
+            </div>
         <div className={styles.lists_container}>
                 <div >
                     <h5>{`${user.first_name}'s Clubs:`}</h5>
