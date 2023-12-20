@@ -2,7 +2,6 @@ import App from './components/App';
 import HomePage from './components/HomePage';
 import LandingPage from './components/LandingPage';
 import BookClubs from './components/BookClubs';
-import BookProfile from './components/BookProfile';
 import Books from './components/Books';
 import Bookshelf from './components/Bookshelf';
 import ClubBooks from './components/ClubBooks';
@@ -46,12 +45,7 @@ const routes = [
             {
                 path: '/books',
                 element: <Books />,
-                children: [
-                    {
-                        path: '/books/:id',
-                        element: <BookProfile />
-                    }
-                ]
+                
             },
             {
                 path: '/bookclubs',
