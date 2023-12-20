@@ -259,16 +259,17 @@ def create_book(data):
         book_id = ''
 
         # Checks if book is already in the database
-        existing_book = Book.query.filter_by(key=data['key']).first()
+        
+        existing_book = Book.query.filter_by(key=data['selectedBook']['key']).first()
         if existing_book:
             book_id = existing_book.id
         
         else:
             book = Book(
-                title=data['title'],
-                author_name=data['author_name'],
-                cover_i=data['cover_i'],
-                key=data['key'],
+                title=data['selectedBook']['title'],
+                author_name=data['selectedBook']['author_name'],
+                cover_i=data['selectedBook']['cover_i'],
+                key=data['selectedBook']['key'],
             )
             db.session.add(book)
             db.session.commit()
@@ -373,10 +374,10 @@ class UserBooks(Resource):
     def post(self):
 
         data = request.get_json()
+        
         book_id = create_book(data)
 
         try:
-
             # checks if user has permission to add book
             if data['user_id'] != session.get('user_id'):
                 return make_response({'error': 'Unauthorized'}, 401)
@@ -391,6 +392,7 @@ class UserBooks(Resource):
                 book_id=book_id, 
                 book_status=data['book_status'],
             )
+            ipdb.set_trace()
             db.session.add(user_book)
             db.session.commit()
             return make_response(user_book.to_dict(), 201)
@@ -447,10 +449,42 @@ class UserBooks(Resource):
 
 api.add_resource(UserBooks, '/api/v1/usersbooks')
 
+class UserBooksById(Resource):
+    def get(self, id):
+        user_book = UserBook.query.filter_by(id=id).first()
+        return make_response(
+            user_book.to_dict(),
+            200
+        )
+
+    def delete(self):
+        try:
+            data = request.get_json()
+
+            # checks if user has permission to delete book
+            if data['user_id'] != session.get('user_id'):
+                return make_response({'error': 'Unauthorized'}, 401)
+
+            # Checks if book is already in the user's list
+            existing_book = UserBook.query.filter_by(
+                user_id=data['user_id'], book_id=data['book_id']).first()
+            if not existing_book:
+                return make_response({'error': 'This user has not saved this book'}, 400)
+
+            db.session.delete(existing_book)
+            db.session.commit()
+            return make_response({'message': 'Book deleted from user list'}, 200)
+        except ValueError as v_error:
+            return make_response({'error': str(v_error)}, 422)
+        except Exception as e:
+            print(f"Error deleting book from user's list: {e}")
+            return make_response({'error': 'Invalid request'}, 500)
+        
+api.add_resource(UserBooksById, '/api/v1/usersbooks/<int:id>')
 
 @app.route('/api/v1/authorized')
 def authorized():
-    # import ipdb; ipdb.set_trace()
+    
     try:
         user = User.query.filter_by(id=session.get('user_id')).first()
         return make_response(user.to_dict(), 200)
@@ -473,8 +507,10 @@ def login():
             return make_response({'user': user.to_dict()}, 200)
         else:
             return make_response({'error': 'Incorrect password'}, 401)
-    except:
-        return make_response({'error': 'Incorrect username'}, 401)
+    except ValueError as v_error:
+        return make_response({'error': str(v_error)}, 401)
+    except Exception as e:
+        return make_response({'error': str(e)}, 500)
     
 
 @app.route('/')

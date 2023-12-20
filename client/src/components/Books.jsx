@@ -13,7 +13,6 @@ import { OutletContext } from './App'
 // Club Modal
 function ClubModal({clubModalShow, handleClubClose, selectedClub, setSelectedClub, loggedInUser, handleAddBookToClub}) {
     
-
     return(
         <Modal
         show={clubModalShow} 
@@ -56,8 +55,8 @@ function BookshelfModal({bookshelfModalShow, handleBookshelfClose, selectedShelf
                 value={selectedShelfOption}
                 onChange={(e) => setSelectedShelfOption(e.target.value)} >
                     <option value='' disabled>Select a bookshelf</option>
-                    <option value='wantToRead' >Want to read</option>
-                    <option value='currentlyReading' >Currently reading</option>
+                    <option value='want to read' >Want to read</option>
+                    <option value='reading' >Currently reading</option>
                     <option value='read' >Read</option>
                 </select>
             </Modal.Body>
@@ -100,14 +99,8 @@ function Books() {
     const [bookshelfModalShow, setBookshelfModalShow] = useState(false);
     const handleClubClose = () => setClubModalShow(false);
     const handleBookshelfClose = () => setBookshelfModalShow(false);
-    const handleClubOpen = () => {
-        setClubModalShow(true)
-        console.log('club modal open')
-    }
-    const handleBookshelfOpen = () => { 
-        setBookshelfModalShow(true)
-        
-    }
+    const handleClubOpen = () => setClubModalShow(true);
+    const handleBookshelfOpen = () => setBookshelfModalShow(true);
 
     const handleAddToBookShelf = () => {
         if (!loggedInUser) {
@@ -119,11 +112,38 @@ function Books() {
             if (bookAlreadyInShelf) {
                 console.log(`${selectedBook.title} is already in ${loggedInUser.username}'s "${selectedShelfOption}" bookshelf`)
             } else {
+                
+                fetch('/usersbooks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        selectedBook:{
+                            title: selectedBook.title,
+                            author_name: selectedBook.author_name,
+                            cover_i: selectedBook.cover_i,
+                            first_publish_year: selectedBook.first_publish_year,
+                            key: selectedBook.key
+                        },
+                        user_id: loggedInUser.id,
+                        book_status: selectedShelfOption
+                        }),
+                    }).then((r) => {
+                        if (r.ok) {
+                            r.json().then((userBook) => {
+                                console.log("Book added to user's bookshelf", userBook)
+                            })
+                        } else {
+                            r.json().then((err) => {
+                                console.log(err)
+                            })
+                        }})
+
                 handleBookshelfClose()
                 setSelectedShelfOption('')
                 console.log(`Adding ${selectedBook.title} to ${loggedInUser.username}'s "${selectedShelfOption}" bookshelf`)
-                // post request to add book to book table
-                // post request to add book to users_books table
+
             }
         }
     }
@@ -139,6 +159,8 @@ function Books() {
             if (bookAlreadyInClub) {
                 console.log(`${selectedBook.title} is already in ${currentClub.name}'s list of books`)
             } else {
+                handleClubClose()
+                setSelectedClub('')
                 console.log(`Adding ${selectedBook.title} to ${currentClub.name}`)
                 // post request to add book to book table
                 //  post request to add book to book_club_books table

@@ -78,7 +78,10 @@ function Login() {
                     })
                 } else { 
                     
-                    console.log('errors? handle them')
+                    resp.json().then((err) => {
+                        console.log(err)
+                    }
+                    )
                 }
             })
         }

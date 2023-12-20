@@ -22,7 +22,7 @@ function App() {
         // console.log(loggedInUser)
       } else {
         // handle what should happen if not logged in
-        console.log('error')
+        resp.json().then((error) => console.log(error))
       }
     })
   }, [])
