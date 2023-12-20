@@ -250,6 +250,38 @@ class BookById(Resource):
 
 api.add_resource(BookById, '/api/v1/books/<int:id>')
 
+def create_book(data):
+    try:
+        # checks if user is logged in
+        if not session.get('user_id'):
+            return make_response({'error': 'Unauthorized'}, 401)
+        
+        book_id = ''
+
+        # Checks if book is already in the database
+        existing_book = Book.query.filter_by(key=data['key']).first()
+        if existing_book:
+            book_id = existing_book.id
+        
+        else:
+            book = Book(
+                title=data['title'],
+                author_name=data['author_name'],
+                cover_i=data['cover_i'],
+                key=data['key'],
+            )
+            db.session.add(book)
+            db.session.commit()
+            book_id = book.id
+        return book_id
+        
+    except ValueError as v_error:
+        return make_response({'error': str(v_error)}, 422)
+    except Exception as e:
+        print(f"Error creating book: {e}")
+        return make_response({f"Error creating book: {e}"}, 500)
+
+
 class BookClubBooks(Resource):
     def get(self):
         book_club_books = [bcb.to_dict() for bcb in BookClubBook.query.all()]
@@ -258,21 +290,22 @@ class BookClubBooks(Resource):
             200
         )
     def post(self):
-        try:
-            data = request.get_json()
+        data = request.get_json()
+        book_id = create_book(data)   
 
+        try:
             # Checks if club_owner is adding the book
             book_club = BookClub.query.get(data['book_club_id'])
             if book_club.owner_id != session.get('user_id'):
                 return make_response({'error': 'Unauthorized'}, 401)
 
             # Checks if book is already in the club
-            existing_book = BookClubBook.query.filter_by(book_id=data['book_id'], book_club_id=data['book_club_id']).first()
-            if existing_book:
+            existing_club_book = BookClubBook.query.filter_by(book_id=book_id, book_club_id=data['book_club_id']).first()
+            if existing_club_book:
                 return make_response({'error': 'This club has already saved this book'}, 400)
             
             book_club_book = BookClubBook(
-                book_id=data['book_id'], 
+                book_id=book_id, 
                 book_club_id=data['book_club_id'], 
                 added_at=datetime.utcnow(),
                 currently_reading=True,
@@ -286,21 +319,36 @@ class BookClubBooks(Resource):
                 book.currently_reading = False
             db.session.commit()
 
-            # add book to user's list
+            # check if book is already in club owner's list
+            owner_with_book = UserBook.query.filter_by(user_id=session.get('user_id'), book_id=book_id).first()
+            if owner_with_book:
+                # if book is already in owner's list, update status to reading
+                owner_with_book.book_status = 'reading'
+
+            # add book to club owner's list
             user_book = UserBook(
                 user_id=session.get('user_id'), 
-                book_id=data['book_id'], 
+                book_id=book_id, 
                 book_status='reading',
             )
             db.session.add(user_book)
             db.session.commit()
 
-            # add book to club members' lists
+            # get club members
             members = BookClubUser.query.filter_by(book_club_id=data['book_club_id']).all()
+
+            # check if book is already in club members' lists
             for member in members:
+                member_with_book = UserBook.query.filter_by(user_id=member.user_id, book_id=book_id).first()
+                if member_with_book:
+                    # if book is already in member's list, update status to reading
+                    member_with_book.book_status = 'reading'
+            
+
+            # add book to club members' lists
                 user_book = UserBook(
                     user_id=member.user_id, 
-                    book_id=data['book_id'], 
+                    book_id=book_id, 
                     book_status='reading',
                 )
                 db.session.add(user_book)
@@ -311,7 +359,7 @@ class BookClubBooks(Resource):
             return make_response({'error': str(v_error)}, 422)
         except Exception as e:
             print(f"Error adding book to book club: {e}")
-            return make_response({'error': 'Invalid request'}, 500)
+            return make_response(f"Error adding book to book club: {e}", 500)
         
 api.add_resource(BookClubBooks, '/api/v1/bookclubsbooks')
 
@@ -323,21 +371,24 @@ class UserBooks(Resource):
             200
         )
     def post(self):
+
+        data = request.get_json()
+        book_id = create_book(data)
+
         try:
-            data = request.get_json()
 
             # checks if user has permission to add book
             if data['user_id'] != session.get('user_id'):
                 return make_response({'error': 'Unauthorized'}, 401)
 
             # Checks if book is already in the user's list
-            existing_book = UserBook.query.filter_by(user_id=data['user_id'], book_id=data['book_id']).first()
+            existing_book = UserBook.query.filter_by(user_id=data['user_id'], book_id=book_id).first()
             if existing_book:
                 return make_response({'error': 'This user has already saved this book'}, 400)
             
             user_book = UserBook(
                 user_id=data['user_id'], 
-                book_id=data['book_id'], 
+                book_id=book_id, 
                 book_status=data['book_status'],
             )
             db.session.add(user_book)
@@ -395,7 +446,7 @@ class UserBooks(Resource):
             return make_response({'error': 'Invalid request'}, 500)
 
 api.add_resource(UserBooks, '/api/v1/usersbooks')
-                
+
 
 @app.route('/api/v1/authorized')
 def authorized():
