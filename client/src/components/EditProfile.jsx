@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 
 // local imports
 import { createEditProfileSchema } from '../yupSchemas';
+import styles from '../stylesheets/EditProfile.module.css';
 
 const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, setEditProfile }) => {
     // console.log(loggedInUser)
@@ -118,10 +119,13 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
     });
     
     return(
-        <div>
-                <h3>Edit Profile</h3>
-                {formErrors ? <div>{formErrors}</div> : null}
-                <Form onSubmit={formik.handleSubmit}>
+        <div className={styles.edit_profile_container}>
+            <div className={styles.components_container}>
+                <h3 className={styles.edit_title}>Edit Profile</h3>
+                {formErrors ? <div className={styles.edit_form_errors}>{formErrors}</div> : null}
+                <div className={styles.edit_form_inputs}>
+                <Form onSubmit={formik.handleSubmit} 
+                className={styles.form_input_container}>
                     <Row className="mb-3">
                         <Form.Group as={Col} >
                             <Form.Label visuallyHidden>First Name</Form.Label>
@@ -129,6 +133,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                                 type="text" 
                                 placeholder={`${user['first_name']}`} 
                                 name="firstName"
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
                                 onChange={formik.handleChange}
                                 value={formik.values.firstName}
                             />
@@ -145,6 +150,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                                 name="lastName"
                                 onChange={formik.handleChange}
                                 value={formik.values.lastName} 
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
                             />
                             {formik.touched.lastName && formik.errors.lastName ? (
                                 <div>{formik.errors.lastName}</div>
@@ -161,6 +167,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                                 name="email" 
                                 onChange={formik.handleChange}
                                 value={formik.values.email}
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
                             />
                             {formik.touched.email && formik.errors.email ? (
                                 <div>{formik.errors.email}</div>
@@ -169,13 +176,14 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
 
                         <InputGroup as={Col} >
                             <Form.Label visuallyHidden>Username</Form.Label>
-                            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+                            
                             <Form.Control 
                                 type="text" 
                                 placeholder={`${user.username}`} 
                                 name="username"
                                 onChange={formik.handleChange}
                                 value={formik.values.username}
+                                className={`form-control input-placeholder-custom ${styles.formControl}`}
                             />
                             {formik.touched.username && formik.errors.username ? (
                                 <div>{formik.errors.username}</div>
@@ -192,6 +200,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                             name="password"
                             onChange={handlePasswordChange}
                             value={formik.values.password}
+                            className={`form-control input-placeholder-custom ${styles.formControl}`}
                         />
                         {formik.touched.password && formik.errors.password ? (
                             <div>{formik.errors.password}</div>
@@ -203,6 +212,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                         <Form.Control 
                         type="password" 
                         placeholder="Confirm new password"
+                        className={`form-control input-placeholder-custom ${styles.formControl}`}
                         name="confirmPassword" 
                         onChange={formik.handleChange}
                         value={formik.values.confirmPassword} />
@@ -215,6 +225,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                     <Form.Group className="mb-3" >
                         <Form.Label visuallyHidden>Profile Picture</Form.Label>
                         <Form.Control 
+                            className={`form-control input-placeholder-custom ${styles.formControl}`}
                             type="text" 
                             placeholder="Enter image URL" 
                             name="profile_pic"
@@ -229,6 +240,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                     <Form.Group className="mb-3" >
                         <Form.Label visuallyHidden>About Me</Form.Label>
                         <Form.Control 
+                            className={`form-control input-placeholder-custom ${styles.formControl}`}
                             as="textarea" 
                             rows={3} 
                             placeholder="Tell us about yourself..."
@@ -245,10 +257,12 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, s
                         <Form.Check type="checkbox" label="Confirm Changes" required />
                     </Form.Group>
                     {formik.status && <div>{formik.status}</div>}
-                    <Button variant="primary" type="submit">
+                    <Button className={styles.custom_btn} type="submit">
                         Submit
                     </Button>
                 </Form>
+                </div>
+                </div>
             </div>
     )
 }
