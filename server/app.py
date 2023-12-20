@@ -315,16 +315,16 @@ class BookClubBooks(Resource):
             db.session.commit()
 
             # set currently_reading to False for all other books in the club
-            other_books = BookClubBook.query.filter_by(book_club_id=data['book_club_id']).all()
+            other_books = BookClubBook.query.filter(BookClubBook.book_club_id==data['book_club_id'], BookClubBook.book_id!=book_id).all()
             for book in other_books:
                 book.currently_reading = False
             db.session.commit()
 
             # check if book is already in club owner's list
-            owner_with_book = UserBook.query.filter_by(user_id=session.get('user_id'), book_id=book_id).first()
-            if owner_with_book:
+            owner_has_book = UserBook.query.filter_by(user_id=session.get('user_id'), book_id=book_id).first()
+            if owner_has_book:
                 # if book is already in owner's list, update status to reading
-                owner_with_book.book_status = 'reading'
+                owner_has_book.book_status = 'reading'
 
             # add book to club owner's list
             user_book = UserBook(
@@ -345,7 +345,6 @@ class BookClubBooks(Resource):
                     # if book is already in member's list, update status to reading
                     member_with_book.book_status = 'reading'
             
-
             # add book to club members' lists
                 user_book = UserBook(
                     user_id=member.user_id, 
@@ -392,7 +391,7 @@ class UserBooks(Resource):
                 book_id=book_id, 
                 book_status=data['book_status'],
             )
-            ipdb.set_trace()
+            # ipdb.set_trace()
             db.session.add(user_book)
             db.session.commit()
             return make_response(user_book.to_dict(), 201)

@@ -151,7 +151,7 @@ const UserProfile = () => {
             </div>
             {editProfile ? (
             <div>
-                <EditProfile loggedInUser={loggedInUser} user={user} setUser={setUser} editedUser={editedUser} setEditedUser={setEditedUser} />
+                <EditProfile loggedInUser={loggedInUser} user={user} setUser={setUser} editedUser={editedUser} setEditedUser={setEditedUser} setEditProfile={setEditProfile}/>
                 <Button variant="secondary" size="sm" onClick={handleShow}>
                     Delete your account
                 </Button>

@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 // local imports
 import { createEditProfileSchema } from '../yupSchemas';
 
-const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser }) => {
+const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser, setEditProfile }) => {
     // console.log(loggedInUser)
     // console.log("User:", user)
     const { id } = useParams();
@@ -106,6 +106,7 @@ const EditProfile = ({ loggedInUser, user, setUser, editedUser, setEditedUser })
                     r.json().then((updatedUser) => {
                         setEditedUser(updatedUser);
                         setFormErrors(null);
+                        setEditProfile(false);
                         console.log('User updated successfully', updatedUser);
                     });
                 }
