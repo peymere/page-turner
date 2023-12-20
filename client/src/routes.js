@@ -70,10 +70,7 @@ const routes = [
                     }
                 ]
             },
-            {
-                path: '/create_book_club',
-                element: <CreateBookClub />
-            },
+            
             {
                 path: '/userprofile/:id/*',
                 element: <UserProfile />,
@@ -89,7 +86,11 @@ const routes = [
                     {
                         path: 'edit',
                         element: <EditProfile />
-                    }
+                    },
+                    {
+                    path: 'create_book_club',
+                    element: <CreateBookClub />
+                    },
                 ]
             }
         ]

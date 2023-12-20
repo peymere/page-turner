@@ -127,36 +127,60 @@ const UserProfile = () => {
 
     return (
         <div className={styles.profile_container}>
+        <div className={styles.profile_components}>
+            <div className={styles.top_lvl_prof}>
+                <div className={styles.user_info_container}>
+                    <img 
+                        src={user.profile_pic ? user.profile_pic : "/src_images/placeholder-prof-pic.png"} 
+                        alt="profile pic" 
+                        className={styles.profile_pic}
+                    />
+                    <h2>{`${user['first_name']} ${user['last_name'][0]}`}</h2>
+                    <h3>@{user.username}</h3>
+                    <h6>Member since {formatDate(user.created_at)}</h6>
+                    <p>{`${user.users_books.length} Books`} | {`${totalClubs} Clubs`}</p>
+                    {loggedInUser && loggedInUser.id === user.id ? (
+                        <div className={styles.btn_cont}>
+                        <Button className={styles.profile_btn} onClick={handleEditProfileClick}>
+                            {!editProfile ? "Edit Profile" : "Cancel" } 
+                        </Button> |
+                        <Button className={styles.profile_btn} >
+                            <NavLink href={`/create_book_club`}>
+                                Create a Book Club
+                            </NavLink>
+                        </Button>
+                        </div>
+                        ) : 
+                        ( <div></div> )
+                    }
+                </div>
+                <div className={styles.user_bio_container}>
+                    <h4>Bio:</h4>
+                    <p>{user.about_me}</p>
 
-            <div className={styles.profile_components}>
-            <div className={styles.user_info_container}>
-                <img 
-                    src={user.profile_pic ? user.profile_pic : "/src_images/placeholder-prof-pic.png"} 
-                    alt="profile pic" 
-                    className={styles.profile_pic}
-                />
-                <h2>{`${user['first_name']}'s Profile`}</h2>
-                <h3>@{user.username}</h3>
-                <h6>Member since {formatDate(user.created_at)}</h6>
-                <p>{`${user.users_books.length} Books`} | {`${totalClubs} Clubs`}</p>
-                {loggedInUser && loggedInUser.id === user.id ? (
-                    <div>
-                    <Button onClick={handleEditProfileClick}>
-                        {!editProfile ? "Edit Profile" : "Cancel" } 
-                    </Button>
-                    <Button>
-                        <NavLink href={`/create_book_club`}>
-                            Create a Book Club
-                        </NavLink>
-                    </Button>
-                    </div>
-                    ) : 
-                    ( <div></div> )
-                }
-            </div>
-            <div className={styles.user_bio_container}>
-                <h4>Bio</h4>
-                <p>{user.about_me}</p>
+                </div>
+                <div className={styles.clubs_cont_border}>
+                <div className={styles.user_clubs_container}>
+                    <h4>Clubs</h4>
+                    <ul className={styles.users_clubs}>
+                        {user?.book_clubs_owned.map((book_club, idx) => (
+                            <li key={idx}>
+                            <NavLink href={`/bookclubs/${book_club.id}`}>
+                                <LiaCrownSolid />
+                                {book_club.name}
+                            </NavLink>
+                            </li>
+                        ))}
+                        {user?.book_clubs.map((book_club, idx) => (
+                            <li key={idx}>
+                            <NavLink href={`/bookclubs/${book_club.id}`}>
+                                {book_club.name}
+                            </NavLink>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                </div>
             </div>
             {editProfile ? (
             <div>
@@ -181,29 +205,7 @@ const UserProfile = () => {
                     <Outlet />
                 </UserContext.Provider>
             </div>
-        <div className={styles.lists_container}>
-                <div >
-                    <h5>{`${user.first_name}'s Clubs:`}</h5>
-                    <ul className={styles.users_lists}>
-                        {user?.book_clubs_owned.map((book_club, idx) => (
-                            <li key={idx}>
-                            
-                            <NavLink href={`/bookclubs/${book_club.id}`}>
-                                <LiaCrownSolid />
-                                {book_club.name}
-                            </NavLink>
-                            </li>
-                        ))}
-                        {user?.book_clubs.map((book_club, idx) => (
-                            <li key={idx}>
-                            <NavLink href={`/bookclubs/${book_club.id}`}>
-                                {book_club.name}
-                            </NavLink>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>   
+        
         </div>
         </div>
     );
