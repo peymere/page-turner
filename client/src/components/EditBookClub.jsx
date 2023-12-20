@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // local imports
-import ClubContext from './ClubContext';
+import ClubContext from './Contexts/ClubContext';
 import { OutletContext } from './App';
 import styles from '../stylesheets/ClubProfile.module.css';
 

@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { OutletContext } from './App'
 import ClubMembers from "./ClubMembers";
 import styles from '../stylesheets/ClubProfile.module.css'
-import ClubContext from "./ClubContext";
+import ClubContext from "./Contexts/ClubContext";
 import ExploreMore from "./ExploreMore";
 
 
