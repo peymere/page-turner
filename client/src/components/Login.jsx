@@ -74,7 +74,7 @@ function Login() {
                         setLoggedInUser(user)
                         console.log(user)
                         // navigate into site
-                        navigate('/home')
+                        navigate(`/userprofile/${user?.id}`)
                     })
                 } else { 
                     

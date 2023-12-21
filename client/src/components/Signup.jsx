@@ -14,7 +14,7 @@ import styles from '../stylesheets/Signup.module.css'
 import { OutletContext } from './App'
 
 function Signup() {
-    const { setLoggedInUser } = useContext(OutletContext)
+    const { loggedInUser, setLoggedInUser } = useContext(OutletContext)
     const [type, setType] = useState('password');
     const [icon, setIcon] = useState(<Eye/>);
     const navigate = useNavigate()
@@ -85,7 +85,7 @@ function Signup() {
                     r.json().then(({user}) => {
                         setLoggedInUser(user)
                         //navigate into site
-                        navigate('/home')
+                        navigate(`/books`)
                     })
                 } else {
                     console.log('Error creating user')

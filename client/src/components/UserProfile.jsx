@@ -12,6 +12,7 @@ import Bookshelf from './Bookshelf';
 import { OutletContext } from './App';
 import EditProfile from './EditProfile';
 import UserContext from './Contexts/UserContext';
+import { Book } from 'react-bootstrap-icons';
 
 const UserProfile = () => {
     const { id } = useParams();
@@ -139,13 +140,16 @@ const UserProfile = () => {
                     <h3>@{user.username}</h3>
                     <h6>Member since {formatDate(user.created_at)}</h6>
                     <p>{`${user.users_books.length} Books`} | {`${totalClubs} Clubs`}</p>
+                    <Button className={styles.profile_btn} >
+                        <NavLink href={`/userprofile/${user.id}/bookshelf`}>Bookshelf</NavLink>
+                    </Button>
                     {loggedInUser && loggedInUser.id === user.id ? (
                         <div className={styles.btn_cont}>
                         <Button className={styles.profile_btn} onClick={handleEditProfileClick}>
                             {!editProfile ? "Edit Profile" : "Cancel" } 
                         </Button> |
                         <Button className={styles.profile_btn} >
-                            <NavLink href={`/create_book_club`}>
+                            <NavLink href={`/userprofile/${loggedInUser?.id}/create_book_club`}>
                                 Create a Book Club
                             </NavLink>
                         </Button>
@@ -195,8 +199,9 @@ const UserProfile = () => {
                     onHide={() => setDeleteModalShow(false)}
                 />  
             </div> ) : 
-            ( <div></div> )
+            ( <div></div> )  
         }
+            
             <div className="route_container">
                 <UserContext.Provider value={{ users_books: user.users_books, user: user }}>
                     <Routes>
@@ -207,7 +212,7 @@ const UserProfile = () => {
                     <Outlet />
                 </UserContext.Provider>
             </div>
-        
+            
         </div>
         </div>
     );
