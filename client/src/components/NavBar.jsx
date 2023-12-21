@@ -43,8 +43,8 @@ function NavBar({loggedInUser, setLoggedInUser}) {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end align-items-right">
                     <Nav className="me-1 navbar_nav">
-                        <Nav.Link href="/home" className='navbar_text'>Home</Nav.Link> <p className='nav_divider'>|</p>
-                        <Nav.Link href="/search" className='navbar_text'>Discover</Nav.Link> <p className='nav_divider'>|</p>
+                        <Nav.Link href="/bookclubs" className='navbar_text'>Book Clubs</Nav.Link> <p className='nav_divider'>|</p>
+                        <Nav.Link href="/books" className='navbar_text'>Books</Nav.Link> <p className='nav_divider'>|</p>
                         {!loggedInUser ? (
                         <>
                             <Nav.Link href='/login' className='navbar_text'>Login</Nav.Link> 

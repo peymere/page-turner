@@ -10,7 +10,7 @@ const ExploreMore = () => {
             <div className={styles.container}>
                 <ul>
                     <li>
-                        <NavLink to='/search' className={`${styles.animated_arrow}`} href="https://google.com">
+                        <NavLink to='/bookclubs' className={`${styles.animated_arrow}`} href="https://google.com">
                             <span className={`${styles.the_arrow} ${styles.left}`}>
                                 <span className={styles.shaft}></span>
                             </span>
