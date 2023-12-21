@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 // local imports
 import { OutletContext } from './App'
 import { Form } from "react-bootstrap"
+import styles from '../stylesheets/CreateNewClub.module.css'
 
 function CreateBookClub() {
     const { id } = useParams();
@@ -55,10 +56,10 @@ function CreateBookClub() {
     })
 
     return (
-        <div>
-            <h1>Create a Book Club</h1>
-            <Form onSubmit={formik.handleSubmit}>
-                <Form.Group className="mb-3" controlId="name">
+        <div className={styles.new_bookclub_container}>
+            <h1 className={styles.edit_title}>Create a Book Club</h1>
+            <Form onSubmit={formik.handleSubmit} className={styles.new_bookclub_container}>
+                <Form.Group className={`mb-3 ${styles.form_container}`} controlId="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control 
                         type="text" 
@@ -66,6 +67,7 @@ function CreateBookClub() {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.name}
+                        className={`form-control input-placeholder-custom ${styles.formControl}`}
                     />
                     {formik.touched.name && formik.errors.name ? (
                         <div>{formik.errors.name}</div>
@@ -79,6 +81,7 @@ function CreateBookClub() {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.description}
+                        className={`form-control input-placeholder-custom ${styles.formControl}`}
                     />
                     {formik.touched.description && formik.errors.description ? (
                         <div>{formik.errors.description}</div>
@@ -89,6 +92,7 @@ function CreateBookClub() {
                     <Form.Control 
                         type="text" 
                         placeholder="Enter image URL" 
+                        className={`form-control input-placeholder-custom ${styles.formControl}`}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.avatar_url}
@@ -98,7 +102,7 @@ function CreateBookClub() {
                     ) : null}
                 </Form.Group>
                 {loggedInUser ? (
-                    <button type="submit">Submit</button>
+                    <button className={styles.custom_btn} type="submit">Submit</button>
                 ) : (
                     <div>You must be <a href='/login'>logged in</a> to create a book club</div>
                 ) }

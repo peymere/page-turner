@@ -1,0 +1,118 @@
+.new_bookclub_container {
+    width: 65%;
+    height: 100%;
+    margin-left: 17%;
+    max-width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    background-color: #999179;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+    outline: none;
+    border-top-style: none;
+
+
+    .form_signin {
+        margin: 100px 80px 20px;
+        /* background-color: rgba(0, 0, 0, 0.5); */
+        padding-bottom: 25px;
+        padding-top: 15px;
+        width: 100%;
+        height: 80%;
+        border-radius: 30px;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .form_container {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        padding-bottom: 10px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        margin-left: 5px;
+        margin-right: 5px;
+        outline: none;
+        border-top-style: none;
+    }
+
+    .edit_title {
+        font-family: 'Newsreader', serif;
+        font-size: calc(1.4rem + 1.5vw);
+        font-weight: 400;
+        color: #f3edd2;
+        margin-bottom: calc(.1rem + .2vw);
+        padding-top: 1px;
+    }
+
+    .form_input_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        padding: 0px 0px 0px 0px;
+        /* margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        margin-right: 0px; */
+        border-radius: 3px;
+        outline: none;
+        border-top-style: none;
+
+    }
+
+    .edit_form_inputs {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .formControl {
+        opacity: 0.75;
+        border-color: #232323;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 3px;
+        background-color: #392E26;
+        font-family: 'Poppins', sans-serif;
+        font-size: calc(.4rem + .7vw);
+        /* width: fit-content; */
+        /* margin-left: 20px; */
+        margin-bottom: 10px;
+        color: #F0DAAE;
+    }
+
+    Button.custom_btn {
+        font-family: 'Poppins', sans-serif;
+        font-variant: normal;
+        font-size: 20px;
+        text-align: center;
+        font-weight: 700;
+        background-color: #584446 !important;
+        color: #D8C3A5 !important;
+        margin-top: .5rem;
+        margin-bottom: 15px;
+        width: 200px;
+        border: #584446;
+    }
+
+    Button.custom_btn:hover {
+        background-color: #D8C3A5 !important;
+        color: #584446 !important;
+        border: #584446;
+    }
+}
